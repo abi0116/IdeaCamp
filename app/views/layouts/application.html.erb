@@ -10,6 +10,30 @@
   </head>
 
   <body>
+    <header>
+      <h1>Idea Camp</h1>
+      <div class = "openbtn"><span></span><span></span><span></span></div><!--ボタンのHTML-->
+      <nav id = "g-nav">
+        <div id = "g-nav-list"><!--ナビゲーションの内容が増えたときに縦にスクロールさせるためのHTML-->
+          <ul>
+            <% if member_signed_in? %>
+              <li><%= link_to "トップ","/" %></li>
+              <li><%= link_to "このサイトについて","#" %></li>
+              <li><%= link_to "マイページ","#" %></li>
+              <li><%= link_to "自分の投稿一覧","#" %></li>
+              <li><%= link_to "すべての採用された投稿一覧","#" %></li>
+              <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete %></li>
+            <% else %>
+              <li><%= link_to "トップ","/" %></li>
+              <li><%= link_to "このサイトについて","#" %></li>
+              <li><%= link_to "すべての採用された投稿一覧","#" %></li>
+              <li><%= link_to "ログイン",new_member_session_path %></li>
+              <li><%= link_to "新規登録",new_member_registration_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
     <%= yield %>
   </body>
 </html>
