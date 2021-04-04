@@ -1,0 +1,16 @@
+<h1>アイディア編集</h1>
+<%= form_with model:@idea,local: true do |f| %>
+  <%= f.label :title,"アイディア名(必須)" %><br>
+  <%= f.text_field :title %><br>
+
+  <%= f.label :image,"添付したい写真、画像(任意)" %><br>
+  <%= f.attachment_field :image %><br>
+
+  <%= f.label :caption,"説明(必須)" %><br>
+  <%= f.text_area :caption %><br>
+
+  <h4>タグ(任意)</h4>
+  <br>
+  <%= f.submit "修正完了" %>
+<% end %>
+<%= link_to "戻る",idea_path(@idea.id) %>

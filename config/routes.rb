@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     sessions: "members/sessions"
   }
 
-  resources :ideas,except: [:new]
+  resources :ideas
   root "ideas#top"
   get "about" => "ideas#about"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

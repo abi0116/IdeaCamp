@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_093008) do
+ActiveRecord::Schema.define(version: 2021_04_04_015743) do
 
   create_table "ideas", force: :cascade do |t|
     t.integer "member_id", null: false
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_04_03_093008) do
     t.boolean "is_adopted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "genre_id"
   end
 
   create_table "members", force: :cascade do |t|

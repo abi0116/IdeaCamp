@@ -17,23 +17,30 @@
         <div id = "g-nav-list"><!--ナビゲーションの内容が増えたときに縦にスクロールさせるためのHTML-->
           <ul>
             <% if member_signed_in? %>
-              <li><%= link_to "トップ","/" %></li>
-              <li><%= link_to "このサイトについて","#" %></li>
-              <li><%= link_to "マイページ","#" %></li>
-              <li><%= link_to "自分の投稿一覧","#" %></li>
-              <li><%= link_to "すべての採用された投稿一覧","#" %></li>
-              <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete %></li>
+              <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "マイページ(自分の投稿一覧)","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete,data: {"turbolinks" => false} %></li>
             <% else %>
-              <li><%= link_to "トップ","/" %></li>
-              <li><%= link_to "このサイトについて","#" %></li>
-              <li><%= link_to "すべての採用された投稿一覧","#" %></li>
-              <li><%= link_to "ログイン",new_member_session_path %></li>
-              <li><%= link_to "新規登録",new_member_registration_path %></li>
+              <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "ログイン",new_member_session_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "新規登録",new_member_registration_path,data: {"turbolinks" => false} %></li>
             <% end %>
           </ul>
         </div>
       </nav>
     </header>
-    <%= yield %>
+    <main>
+      <div class = "notifications">
+        <% flash.each do |key,value| %><!-- keyにnotice,valueにメッセージ -->
+          <%= content_tag(:div,value,class: key) %><!-- ここの記述よくわからない -->
+        <% end %>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>

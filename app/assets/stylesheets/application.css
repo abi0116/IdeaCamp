@@ -134,3 +134,20 @@ header {
   height: 100px;
   background-color: #999;
 }
+
+main {
+  padding-left: 300px;
+}
+
+.notifications {
+  .notice {
+    background-color: blue;
+    color: white;
+    text-align: center;
+  }
+  .alert {
+    background-color: orange;
+    color: white;
+    text-align: center;
+  }
+}
