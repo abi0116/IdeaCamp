@@ -1,0 +1,70 @@
+<%#= if current_member.id == @idea.member_id %>
+<!--<h1>マイページ</h1>-->
+<div class = "container">
+  <div class = "row">
+    <div class = "col-md-3">
+      <h2>メンバー情報</h2>
+      <h4>名前</h4>
+      <%= @member.last_name + @member.first_name %>
+      <h4>投稿数</h4>
+      <%= @member.ideas.count %>件
+      <h4>採用投稿数</h4>
+      <%= @member.ideas.where(is_adopted: "true").count %>件
+    </div>
+    <div class = "col-md-9">
+      <% if current_member.id == @member.id %>
+        <h2 class = "mb-3">自分のアイディア投稿一覧</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
+        <% @ideas.each do |idea| %>
+          <div class = "border border-info rounded">
+          <table class = "table table-borderless">
+            <tr>
+              <th><h4>タイトル</h4></th>
+              <th class = "pl-2"><h4>説明文</h4></th>
+              <th class = "pl-2"><h4>タグ</h4></th>
+              <th class = "pl-2"><h4>採用ステータス</h4></th>
+            </tr>
+            <tr>
+              <td class = "pl-2"><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></td>
+              <td class = "pl-2"><%= idea.caption %></td>
+              <td class = "pl-2"></td>
+              <td class = "pl-2">
+                <% if idea.is_adopted == true %>
+                  <P>採用</P>
+                <% else %>
+                  <P>未採用</P>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th class = "pl-2"><h4>投稿日</h4></th>
+              <th class = "pl-2"><h4>コメント数</h4></th>
+              <th class = "pl-2"><h4>いいね数</h4></th>
+            </tr>
+            <tr>
+              <td class = "pl-2"><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+              <td class = "pl-2"><%= idea.idea_comments.count %>件</td>
+              <td class = "pl-2"></td>
+            </tr>
+          </table>
+          </div>
+        <% end %>
+      <% else %>
+        <h2>採用されたアイディア投稿一覧(未採用は非表示)</h2><!-- 他人の投稿は採用ステータスがtrueのアイディアのみ表示 -->
+        <% @ideas.each do |idea| %>
+          <h4>タイトル</h4>
+          <%= idea.title %>
+          <h4>説明文</h4>
+          <%= idea.caption %>
+          <h4>タグ</h4>
+          <br>
+          <h4>投稿日</h4>
+          <%= idea.created_at.strftime("%Y/%m/%d %H:%M") %>
+          <h4>コメント数</h4>
+          <br>
+          <h4>いいね数</h4>
+          <br>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

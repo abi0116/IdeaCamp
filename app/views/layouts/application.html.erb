@@ -19,7 +19,7 @@
             <% if member_signed_in? %>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
               <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
-              <li><%= link_to "マイページ(自分の投稿一覧)","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id),data: {"turbolinks" => false} %></li>
               <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete,data: {"turbolinks" => false} %></li>

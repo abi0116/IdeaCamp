@@ -1,0 +1,53 @@
+<div class = "container">
+  <div class = "row">
+    <div class = "col-md-9 mx-auto mt-3">
+      <h1>アイディア詳細</h1>
+      <table class = "table table-borderless border-bottom border-dark">
+        <tr>
+          <th>アイディア名</th>
+          <th>写真、画像</th>
+          <th>説明</th>
+        </tr>
+        <tr>
+          <td>
+            <%= @idea.title %><br><br>
+            <strong>タグ</strong><br><br><br>
+            <strong>作成日</strong><br>
+            <%= @idea.created_at.strftime("%Y/%m/%d %H:%M") %><br><br>
+            <strong>いいね</strong><br><br><br>
+            <%= link_to "編集",edit_idea_path(@idea.id) %>
+            <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
+          </td>
+          <td><%= attachment_image_tag @idea,:image,:fill,350,300,format: "jpg",follback: "no_image.jpg" %></td>
+          <td><%= @idea.caption %></td>
+        </tr>
+      </table>
+      <h4>コメント</h4>
+      <div class = "row mb-4">
+        <div class = "new-comments col-md-5" >
+          <p>コメント件数:<%= @idea.idea_comments.count %></p>
+          <%= form_with(model:[@idea,@idea_comment],local: true) do |f| %>
+            <%= f.text_area :comment,row:"15",placeholder: "コメント記入欄" %>
+            <%= f.submit "送信する" %>
+          <% end %>
+        </div>
+        <div class = "comment-log col-md-7 mb-4">
+          <table class = "table" >
+            <% @idea.idea_comments.each do |idea_comment| %>
+              <tr>
+                <td>
+                <%= idea_comment.member.last_name + idea_comment.member.first_name %><br>
+                メンバーid:<%= idea_comment.member.id %>
+                </td>
+                <td>
+                <%= idea_comment.comment %><br>
+                <%= idea_comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

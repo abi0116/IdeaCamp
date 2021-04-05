@@ -13,6 +13,9 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap";
+ @import 'font-awesome-sprockets';
+ @import 'font-awesome';
 
 * {
   margin: 0;
@@ -135,9 +138,9 @@ header {
   background-color: #999;
 }
 
-main {
-  padding-left: 300px;
-}
+// main {
+  // padding-left: 300px;
+// }
 
 .notifications {
   .notice {

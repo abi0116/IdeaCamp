@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class Members::IdeasController < ApplicationController
 
   def top
   end
@@ -16,6 +16,7 @@ class IdeasController < ApplicationController
 
   def show
     @idea = Idea.find(params[:id])
+    @idea_comment = IdeaComment.new
   end
 
   def create
