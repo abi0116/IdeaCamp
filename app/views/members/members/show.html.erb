@@ -16,34 +16,44 @@
         <h2 class = "mb-3">自分のアイディア投稿一覧</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
         <% @ideas.each do |idea| %>
           <div class = "border border-info rounded">
-          <table class = "table table-borderless">
+          <table class = "table table-borderless table-sm">
             <tr>
-              <th><h4>タイトル</h4></th>
-              <th class = "pl-2"><h4>説明文</h4></th>
-              <th class = "pl-2"><h4>タグ</h4></th>
-              <th class = "pl-2"><h4>採用ステータス</h4></th>
+              <td>
+                <strong><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></strong><br>
+                <%= idea.caption %>
+              </td>
+              <th class = "pl-2"><%= attachment_image_tag idea,:image,:fill,100,100,format: "jpg",follback: "no_image.jpg" %></th>
+              <th class = "pl-2"><h6>タグ</h6></th>
             </tr>
             <tr>
-              <td class = "pl-2"><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></td>
-              <td class = "pl-2"><%= idea.caption %></td>
-              <td class = "pl-2"></td>
               <td class = "pl-2">
+                <%= idea.member.last_name + idea.member.first_name %><br>
+                <%= idea.created_at.strftime("%Y/%m/%d %H:%M") %>
+              </td>
+              <td class = "pl-2">
+                コメント:<%= idea.idea_comments.count %>件<br>
+                <% if idea.favorited_by?(current_member) %>
+                  <p>
+                    <%= link_to idea_favorites_path(idea),method: :delete do %>
+                      ♥<%= idea.favorites.count %>
+                    <% end %>
+                  </p>
+                <% else %>
+                  <p>
+                    <%= link_to idea_favorites_path(idea),method: :post do %>
+                      ♡<%= idea.favorites.count %>
+                    <% end %>
+                  </p>
+                <% end %>
+              </td>
+              <td class = "pl-2">
+                <h6>採用ステータス</h6>
                 <% if idea.is_adopted == true %>
                   <P>採用</P>
                 <% else %>
                   <P>未採用</P>
                 <% end %>
               </td>
-            </tr>
-            <tr>
-              <th class = "pl-2"><h4>投稿日</h4></th>
-              <th class = "pl-2"><h4>コメント数</h4></th>
-              <th class = "pl-2"><h4>いいね数</h4></th>
-            </tr>
-            <tr>
-              <td class = "pl-2"><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-              <td class = "pl-2"><%= idea.idea_comments.count %>件</td>
-              <td class = "pl-2"></td>
             </tr>
           </table>
           </div>

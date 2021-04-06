@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :members
     resources :ideas do
     resources :idea_comments, only: [:create,:destroy]
+    resource :favorites, only: [:create,:destroy]
   end
   root "ideas#top"
   get "about" => "ideas#about"

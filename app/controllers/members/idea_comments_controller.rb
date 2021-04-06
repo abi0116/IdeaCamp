@@ -9,6 +9,8 @@ class Members::IdeaCommentsController < ApplicationController
   end
 
   def destroy
+    IdeaComment.find_by(id: params[:id],idea_id: params[:idea_id]).destroy
+    redirect_to idea_path(params[:idea_id])
   end
 
   private

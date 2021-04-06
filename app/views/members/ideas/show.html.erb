@@ -14,7 +14,20 @@
             <strong>タグ</strong><br><br><br>
             <strong>作成日</strong><br>
             <%= @idea.created_at.strftime("%Y/%m/%d %H:%M") %><br><br>
-            <strong>いいね</strong><br><br><br>
+            <strong>いいね</strong><br>
+            <% if @idea.favorited_by?(current_member) %>
+              <p>
+                <%= link_to idea_favorites_path(@idea.id),method: :delete do %>
+                  ♥<%= @idea.favorites.count %>
+                <% end %>
+              </p>
+            <% else %>
+              <p>
+                <%= link_to idea_favorites_path(@idea.id),method: :post do %>
+                  ♡<%= @idea.favorites.count %>
+                <% end %>
+              </p>
+            <% end %>
             <%= link_to "編集",edit_idea_path(@idea.id) %>
             <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
           </td>
@@ -42,6 +55,14 @@
                 <td>
                 <%= idea_comment.comment %><br>
                 <%= idea_comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+                </td>
+
+                <td>
+                  <% if idea_comment.member == current_member %>
+                    <div class = "comment-delete" >
+                      <%= link_to "削除",idea_idea_comment_path(idea_comment.idea,idea_comment),method: :delete,data: {confirm: "削除しますか？"} %>
+                    </div>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

@@ -6,5 +6,6 @@ class Member < ApplicationRecord
 
   has_many :ideas,dependent: :destroy
   has_many :idea_comments,dependent: :destroy
+  has_many :favorites,dependent: :destroy
 
 end
