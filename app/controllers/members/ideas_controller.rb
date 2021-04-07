@@ -8,6 +8,7 @@ class Members::IdeasController < ApplicationController
 
   def new
     @idea = Idea.new
+    @genres = ["キャンプ","登山","クライミング","スキー","カヌー","釣り","ダイビング","サイクリング"]
   end
 
   def index

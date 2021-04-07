@@ -23,6 +23,10 @@
               <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete,data: {"turbolinks" => false} %></li>
+            <%# elsif admin_signd_in? %>
+              <!--<li>管理者</li>-->
+              <!--<li><%#= link_to "ログアウト",destroy_admin_session_path,method: :delete,data: {"turbolinks" => false} %></li>-->
+              <!--<li><%#= link_to "全アイディア一覧",admins_idea_path,data: {"turbolinks" => false} %></li>-->
             <% else %>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
               <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>

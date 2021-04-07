@@ -1,0 +1,15 @@
+<h1>すべての投稿一覧</h1>
+<% @ideas.each do |idea| %>
+<p>投稿者</p>
+<%= idea.member.last_name + idea.member.first_name %>
+<p>Idea名</p>
+<%= idea.title %>
+<p>内容</p>
+<%= idea.caption %>
+<p>ジャンル</p>
+<br>
+<p>タグ</p>
+<br>
+<p>投稿日</p>
+<%= idea.created_at %>
+<% end %>
