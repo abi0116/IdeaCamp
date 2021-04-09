@@ -154,3 +154,27 @@ main {
     text-align: center;
   }
 }
+
+.box-top {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #474747;
+    background: whitesmoke;
+    border-left: double 7px #4ec4d3;
+    border-right: double 7px #4ec4d3;
+}
+.box-top p {
+    margin: 0;
+    padding: 0;
+}
+
+.box-myranks {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    background: #f0f7ff;
+    border: dashed 2px #5b8bd0;
+}
+.box-myranks p {
+    margin: 0;
+    padding: 5px;
+}

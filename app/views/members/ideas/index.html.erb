@@ -1,33 +1,34 @@
 <div class = "container">
   <div class = "row">
-    <h1>すべての投稿一覧</h1>
+    <h2>採用された投稿一覧(全<%= @ideas.count %>件)</h2>
     <table class = "table">
       <thead>
-        <tr>
-          <th>投稿者</th>
-          <th>Idea名</th>
-          <th>内容</th>
-          <th>ジャンル</th>
-          <th>タグ</th>
-          <th>採用ステータス</th>
-          <th>投稿日</th>
-        </tr>
+          <tr>
+            <th>投稿者</th>
+            <th>Idea名</th>
+            <th>内容</th>
+            <th>ジャンル</th>
+            <th>タグ</th>
+            <th>採用ステータス</th>
+            <th>投稿日</th>
+          </tr>
       </thead>
       <% @ideas.each do |idea| %>
         <tbody>
           <tr>
-            <td>
-              <%= link_to admins_member_path(idea.member.id) do %>
-                <%= idea.member.last_name + idea.member.first_name %>
-              <% end %>
-            </td>
+            <td><%= idea.member.last_name + idea.member.first_name %></td>
             <td><%= idea.title %></td>
             <td><%= idea.caption %></td>
-            <td><%= idea.genre.name %></td>
             <td>
               <% idea.tag_list.each do |tag| %>
                 <%= link_to tag,ideas_path(tag_name: tag),data: {"turbolinks" => false} %>
-              <% end %></td>
+              <% end %>
+            </td>
+            <td>
+              <% idea.tag_list.each do |tag| %>
+                <%= link_to tag,"#" %>
+              <% end %>
+            </td>
             <td>
               <% if idea.is_adopted == true %>
                   <P>採用</P>

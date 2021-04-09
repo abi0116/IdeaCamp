@@ -8,12 +8,22 @@ class Members::IdeasController < ApplicationController
 
   def new
     @idea = Idea.new
-    @genres = ["キャンプ","登山","クライミング","スキー","カヌー","釣り","ダイビング","サイクリング"]
   end
 
   def index
-    @ideas = Idea.all
+    if params[:tag_name]
+      @ideas = Idea.tagged_with("#{params[:tag_name]}").where(is_adopted: true).order(created_at: :desc)
+    else
+      @ideas = Idea.where(is_adopted: true).order(created_at: :desc)
+    end
+    # @genre = Genre.find_by(created_at: params[:genre_id])
   end
+
+  def genre_index
+    @ideas = Idea.where(is_adopted: true)
+    @ideas.genre = @ideas.genre.where("genre_id = ?",params[:genre_id])
+  end
+
 
   def show
     @idea = Idea.find(params[:id])
@@ -47,13 +57,19 @@ class Members::IdeasController < ApplicationController
   def destroy
     @idea = Idea.find(params[:id])
     @idea.destroy
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   private
 
   def idea_params
-    params.require(:idea).permit(:title,:image,:caption,:member_id)#_idがいるかどうか見ておく
+    params.require(:idea).permit(:title,:image,:caption,:member_id,:genre_id,:tag_list)#_idがいるかどうか見ておく
   end
 
 end
+
+#params:{XXXXXX}
+#params: {idea:{title:"XXXX", image: "XXXX", ........} }
+#params[:idea] => {title:"XXXX", image: "XXXX", ........}
+#params[:idea][:title] => xxxx
+#user = User.find(params[:id])

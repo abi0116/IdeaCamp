@@ -17,20 +17,33 @@
         <div id = "g-nav-list"><!--ナビゲーションの内容が増えたときに縦にスクロールさせるためのHTML-->
           <ul>
             <% if member_signed_in? %>
+              <div class = "border">
+              <% if current_member.is_company == false %>
+                  <P><%= current_member.last_name + current_member.first_name %> : 一般メンバー</P>
+                <% else %>
+                  <P><%= current_member.last_name + current_member.first_name %> : 企業メンバー</P>
+              <% end %>
+              </div>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
               <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
               <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id),data: {"turbolinks" => false} %></li>
               <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
-              <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "すべての採用された投稿一覧",ideas_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete,data: {"turbolinks" => false} %></li>
-            <%# elsif admin_signd_in? %>
-              <!--<li>管理者</li>-->
-              <!--<li><%#= link_to "ログアウト",destroy_admin_session_path,method: :delete,data: {"turbolinks" => false} %></li>-->
-              <!--<li><%#= link_to "全アイディア一覧",admins_idea_path,data: {"turbolinks" => false} %></li>-->
+            <% elsif admin_signed_in? %>
+              <div class = "border">
+                <P><%= current_admin.name %> : 管理者</P>
+              </div>
+              <li>管理者</li>
+              <li><%= link_to "すべての投稿一覧",admins_ideas_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "メンバー一覧",admins_members_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "ジャンル一覧",admins_genres_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "企業申請受理",admins_company_path,data: {"turbolinks" => false} %></li>
+              <li><%= link_to "ログアウト",destroy_admin_session_path,method: :delete,data: {"turbolinks" => false} %></li>
             <% else %>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
               <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
-              <li><%= link_to "すべての採用された投稿一覧","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "すべての採用された投稿一覧",ideas_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログイン",new_member_session_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "新規登録",new_member_registration_path,data: {"turbolinks" => false} %></li>
             <% end %>

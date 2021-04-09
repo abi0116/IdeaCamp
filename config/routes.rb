@@ -20,12 +20,14 @@ Rails.application.routes.draw do
     end
     root "ideas#top"
     get "about" => "ideas#about"
+    get "genre" => "ideas#genre_index"
   end
 
   namespace :admins do
     resources :ideas, only: [:index]
-    resources :members, only: [:index]
+    resources :members, only: [:index,:show]
     resources :genres, only: [:index,:create,:edit,:update,:destroy]
+    get "company" => "members#company"
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

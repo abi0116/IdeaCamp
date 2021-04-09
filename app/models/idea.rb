@@ -2,6 +2,7 @@ class Idea < ApplicationRecord
 
   belongs_to :member
   attachment :image
+  acts_as_taggable
   has_many :idea_comments,dependent: :destroy
   has_many :favorites,dependent: :destroy
   belongs_to :genre

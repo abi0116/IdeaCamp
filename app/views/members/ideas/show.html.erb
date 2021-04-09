@@ -4,17 +4,15 @@
       <h1>アイディア詳細</h1>
       <table class = "table table-borderless border-bottom border-dark">
         <tr>
-          <th>アイディア名</th>
-          <th>写真、画像</th>
-          <th>説明</th>
-        </tr>
-        <tr>
-          <td>
+          <td style="width: 25%">
+            <strong>アイディア名</strong><br>
             <%= @idea.title %><br><br>
-            <strong>タグ</strong><br><br><br>
+            <strong>ジャンル</strong><br>
+            <%= @idea.genre.name %><br><br>
+            <strong>タグ</strong><br>
+            <%= @idea.tag_list %><br>
             <strong>作成日</strong><br>
             <%= @idea.created_at.strftime("%Y/%m/%d %H:%M") %><br><br>
-            <strong>いいね</strong><br>
             <% if @idea.favorited_by?(current_member) %>
               <p>
                 <%= link_to idea_favorites_path(@idea.id),method: :delete do %>
@@ -31,8 +29,14 @@
             <%= link_to "編集",edit_idea_path(@idea.id) %>
             <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
           </td>
-          <td><%= attachment_image_tag @idea,:image,:fill,350,300,format: "jpg",follback: "no_image.jpg" %></td>
-          <td><%= @idea.caption %></td>
+          <td style="width: 30%">
+            <strong>写真、画像</strong><br>
+            <%= attachment_image_tag @idea,:image,:fill,350,300,format: "jpg",follback: "no_image.jpg" %>
+          </td>
+          <td style="width: 45%">
+            <strong>説明</strong><br>
+            <%= @idea.caption %>
+          </td>
         </tr>
       </table>
       <h4>コメント</h4>

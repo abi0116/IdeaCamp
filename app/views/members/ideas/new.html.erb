@@ -4,9 +4,13 @@
       <h1>新規投稿</h1>
       <%= form_with model:@idea,local: true do |f| %>
         <%= f.label :title,"アイディア名(必須)" %><br>
-        <%= f.text_field :title %><br>
+        <%= f.text_field :title %><br><br>
 
-        <%#= f.select :genre_id, options_for_select(@genres,{select: genre.id.to_i}) %>
+        <%= f.collection_select :genre_id,Genre.all,:id,:name,include_blank: "選択してください" %><br>
+
+
+        <%= f.label :tag_list,"タグリスト" %><br>
+        <%= f.text_field :tag_list, value: @idea.tag_list.join(','),placeholder: "例) テント,一人用" %><br>
 
         <%= f.label :image,"添付したい写真、画像(任意)" %><br>
         <%= f.attachment_field :image %><br>
@@ -14,10 +18,16 @@
         <%= f.label :caption,"説明(必須)" %><br>
         <%= f.text_area :caption %><br>
 
-        <h4>タグ(任意)</h4>
-        <br>
         <%= f.submit "投稿" %>
       <% end %>
     </div>
   </div>
 </div>
+
+
+<!--params[:team] => {group_id: "XXXXXXXX"}-->
+<!--params[:team][:group_id] => "XXXXXX"-->
+
+
+<!--=> {params:{team:{group_id: "XXXXXXXX"}-->
+

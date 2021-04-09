@@ -9,21 +9,44 @@
       <h4>投稿数</h4>
       <%= @member.ideas.count %>件
       <h4>採用投稿数</h4>
-      <%= @member.ideas.where(is_adopted: "true").count %>件
+      <%= @member.ideas.where(is_adopted: "true").count %>件<br>
+      <div class = "box-myranks" >
+        <p>いいね数ランキング</p>
+        <% @my_ranks.each.with_index(1) do |idea,i| %><!-- ランキング機能「Railsでお手軽ランキング機能」参照 -->
+         <p>
+            第
+            <%= i %>
+            位
+            <%= idea.title %><br>
+            いいねの数 : <%= idea.favorites.count %><br>
+          </p>
+        <% end %>
+      </div>
     </div>
     <div class = "col-md-9">
       <% if current_member.id == @member.id %>
         <h2 class = "mb-3">自分のアイディア投稿一覧</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
         <% @ideas.each do |idea| %>
-          <div class = "border border-info rounded">
+          <div class = "border border-info rounded mb-3">
           <table class = "table table-borderless table-sm">
             <tr>
-              <td>
+              <th class = "pl-2" style="width: 25%"><%= attachment_image_tag idea,:image,:fill,100,100,format: "jpg",follback: "no_image.jpg" %></th>
+              <td style="width: 45%">
                 <strong><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></strong><br>
                 <%= idea.caption %>
               </td>
-              <th class = "pl-2"><%= attachment_image_tag idea,:image,:fill,100,100,format: "jpg",follback: "no_image.jpg" %></th>
-              <th class = "pl-2"><h6>タグ</h6></th>
+              <td class = "pl-2" style="width: 30%">
+                <h6>
+                  ジャンル :
+                  <%= idea.genre.name %>
+                </h6><br>
+                <h6>
+                  タグ :
+                  <% idea.tag_list.each do |tag| %>
+                    <%= link_to tag,ideas_path(tag_name: tag),data: {"turbolinks" => false} %>
+                  <% end %>
+                </h6>
+              </td>
             </tr>
             <tr>
               <td class = "pl-2">
@@ -33,25 +56,25 @@
               <td class = "pl-2">
                 コメント:<%= idea.idea_comments.count %>件<br>
                 <% if idea.favorited_by?(current_member) %>
-                  <p>
+                  <h6>
                     <%= link_to idea_favorites_path(idea),method: :delete do %>
                       ♥<%= idea.favorites.count %>
                     <% end %>
-                  </p>
+                  </h6>
                 <% else %>
-                  <p>
+                  <h6>
                     <%= link_to idea_favorites_path(idea),method: :post do %>
                       ♡<%= idea.favorites.count %>
                     <% end %>
-                  </p>
+                  </h6>
                 <% end %>
               </td>
               <td class = "pl-2">
                 <h6>採用ステータス</h6>
                 <% if idea.is_adopted == true %>
-                  <P>採用</P>
+                  <h6>採用</h6>
                 <% else %>
-                  <P>未採用</P>
+                  <h6>未採用</h6>
                 <% end %>
               </td>
             </tr>
