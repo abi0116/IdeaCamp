@@ -20,8 +20,9 @@ class Members::IdeasController < ApplicationController
   end
 
   def genre_index
-    @ideas = Idea.where(is_adopted: true)
-    @ideas.genre = @ideas.genre.where("genre_id = ?",params[:genre_id])
+    @ideas = Idea.where("genre_id = ?",params[:genre_id])#クエリパラメータの値を受け取っている,/genle?genre_id=3←トップのリンクで指定した
+    @all_ranks = Idea.find(Favorite.group(:idea_id).order("count(idea_id) desc").limit(3).pluck(:idea_id))
+    @genre_ranks = @all_ranks.select{ |idea| idea.genre_id == Idea.where("genre_id = ?",params[:genre_id])}
   end
 
 
