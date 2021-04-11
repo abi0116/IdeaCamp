@@ -43,7 +43,7 @@
                 <h6>
                   タグ :
                   <% idea.tag_list.each do |tag| %>
-                    <%= link_to tag,ideas_path(tag_name: tag),data: {"turbolinks" => false} %>
+                    <%= link_to tag,ideas_path(tag_name: tag),data: {"turbolinks" => false} %><!--クエリパラメータ-->
                   <% end %>
                 </h6>
               </td>

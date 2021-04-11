@@ -26,8 +26,10 @@
                 <% end %>
               </p>
             <% end %>
-            <%= link_to "編集",edit_idea_path(@idea.id) %>
-            <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
+            <% if @idea.member == current_member %>
+              <%= link_to "編集",edit_idea_path(@idea.id) %>
+              <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
+            <% end %>
           </td>
           <td style="width: 30%">
             <strong>写真、画像</strong><br>

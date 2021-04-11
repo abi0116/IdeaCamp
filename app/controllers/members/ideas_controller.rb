@@ -1,6 +1,8 @@
 class Members::IdeasController < ApplicationController
 
   def top
+    @ideas = Idea.all
+    @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
   end
 
   def about
@@ -16,6 +18,7 @@ class Members::IdeasController < ApplicationController
     else
       @ideas = Idea.where(is_adopted: true).order(created_at: :desc)
     end
+      @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
     # @genre = Genre.find_by(created_at: params[:genre_id])
   end
 

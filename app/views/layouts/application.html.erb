@@ -58,6 +58,11 @@
         <% end %>
       </div>
       <%= yield %>
+      <div id = "back"><!-- ページトップリンク -->
+        <%= link_to "#",data: {"turbolinks" => false} do %>
+          <%= image_tag(src= "page_top_link.png", size: "350x200") %>
+        <% end %>
+      </div>
     </main>
   </body>
 </html>

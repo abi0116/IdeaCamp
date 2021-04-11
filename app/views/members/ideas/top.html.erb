@@ -1,8 +1,10 @@
 <div class = "container mb-3">
   <div class = "row">
     <div class = "main-top d-flex mt-4 mx-auto">
-      <div class = "main-top-logo mr-5" >
-        <%= image_tag(src= "logo.png", size: "200x200") %>
+      <div class = "main-top-logo mr-5 mt-4" >
+        <div class = "text-center">
+          <%= image_tag(src= "logo.png", size: "200x200") %>
+        </div>
         <div class = "box-top" >
           <p>
             あったらいいな<br>
@@ -78,5 +80,18 @@
     </div>
     <% end %>
   </div>
+</div>
+<div class = "tag-list-box">
+  <div class = "tag-list">
+    <p>タグ一覧</p>
+    <% if @tags.present? %>
+      <% @tags.each do |tag| %>
+        <%= link_to "#{tag.name}(#{tag.taggings_count})",ideas_path(tag_name: tag.name),data: {"turbolinks" => false} %>
+      <% end %>
+    <% else %>
+      <p>登録されているタグはありません</p>
+    <% end %>
+  </div>
+  <br>
 </div>
 

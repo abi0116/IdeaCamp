@@ -33,3 +33,12 @@ $(document).ready(function () {
     $("#g-nav").removeClass("panelactive");//ナビゲーションのpanelactiveクラスも除去
   });
 });
+
+$(document).ready(function () {
+  $("#back a").on(click,function(event){
+    $("body,html").animate({
+      scrollTop:0
+    },1000);
+    event.preventDefault();// aタグの無効化
+  })
+});
