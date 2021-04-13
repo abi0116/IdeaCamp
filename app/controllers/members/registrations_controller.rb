@@ -59,4 +59,10 @@ class Members::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  before_action :configure_permit_parameters, if: :devise_controller?
+
+  def configure_permit_parameters
+    devise_parameter_sanitizer.permit(:sign_up,keys: [:last_name,:first_name,:postal_code,:address,:telephone_number,:email])
+    #devise_parameter_sanitizer.permit(:sign_in,keys: [:last_name,:first_name])
+  end
 end

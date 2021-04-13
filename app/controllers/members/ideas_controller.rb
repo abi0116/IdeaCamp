@@ -13,12 +13,20 @@ class Members::IdeasController < ApplicationController
   end
 
   def index
-    if params[:tag_name]
-      @ideas = Idea.tagged_with("#{params[:tag_name]}").where(is_adopted: true).order(created_at: :desc)
+    if current_member.is_company == false
+      if params[:tag_name]
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(is_adopted: true).order(created_at: :desc)#採用されている投稿のみ表示
+      else
+        @ideas = Idea.where(is_adopted: true).order(created_at: :desc)#採用されている投稿のみ表示
+      end
     else
-      @ideas = Idea.where(is_adopted: true).order(created_at: :desc)
+      if params[:tag_name]
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").order(created_at: :desc)#すべての投稿を表示
+      else
+        @ideas = Idea.order(created_at: :desc)#すべての投稿を表示
+      end
     end
-      @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
+    @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
     # @genre = Genre.find_by(created_at: params[:genre_id])
   end
 

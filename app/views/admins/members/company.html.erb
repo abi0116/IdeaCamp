@@ -1,9 +1,0 @@
-<h2>企業申請受理</h2>
-<% @members.each do |member| %>
-  <%= member.last_name + member.first_name %>
-  <% if member.is_company == false %>
-    <P><%= current_member.last_name + current_member.first_name %> : 一般メンバー</P>
-  <% else %>
-    <P><%= current_member.last_name + current_member.first_name %> : 企業メンバー</P>
-  <% end %>
-<% end %>

@@ -21,13 +21,15 @@ Rails.application.routes.draw do
     root "ideas#top"
     get "about" => "ideas#about"
     get "genre" => "ideas#genre_index"
+    resources :companies,only: [:new,:create]
   end
 
   namespace :admins do
     resources :ideas, only: [:index]
     resources :members, only: [:index,:show]
     resources :genres, only: [:index,:create,:edit,:update,:destroy]
-    get "company" => "members#company"
+    resources :companies,only: [:index,:update]
+    get "complete" => "companies#complete"
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

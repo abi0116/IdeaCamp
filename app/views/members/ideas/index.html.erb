@@ -1,6 +1,10 @@
 <div class = "container">
   <div class = "row">
-    <h2>採用された投稿一覧(全<%= @ideas.count %>件)</h2>
+    <% if current_member.is_company == false %>
+      <h2>採用された投稿一覧(全<%= @ideas.count %>件)</h2>
+    <% else %>
+      <h2>すべてのアイディア一覧(全<%= @ideas.count %>件)</h2>
+    <% end %>
     <table class = "table">
       <thead>
           <tr>
@@ -17,7 +21,7 @@
         <tbody>
           <tr>
             <td><%= idea.member.last_name + idea.member.first_name %></td>
-            <td><%= idea.title %></td>
+            <td><strong><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></strong></td>
             <td><%= idea.caption %></td>
             <td>
               <%= idea.genre.name %>

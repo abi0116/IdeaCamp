@@ -86,7 +86,7 @@
     <p>タグ一覧</p>
     <% if @tags.present? %>
       <% @tags.each do |tag| %>
-        <%= link_to "#{tag.name}(#{tag.taggings_count})",ideas_path(tag_name: tag.name),data: {"turbolinks" => false} %>
+        <%= link_to "##{tag.name}(#{tag.taggings_count})",ideas_path(tag_name: tag.name),data: {"turbolinks" => false} %>
       <% end %>
     <% else %>
       <p>登録されているタグはありません</p>

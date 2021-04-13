@@ -30,10 +30,13 @@
               <%= link_to "編集",edit_idea_path(@idea.id) %>
               <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
             <% end %>
+            <% if current_member.is_company == true %>
+              採用しますか？
+            <% end %>
           </td>
           <td style="width: 30%">
             <strong>写真、画像</strong><br>
-            <%= attachment_image_tag @idea,:image,:fill,350,300,format: "jpg",follback: "no_image.jpg" %>
+            <%= attachment_image_tag @idea,:image,:fill,370,320,format: "jpg",follback: "no_image.jpg" %>
           </td>
           <td style="width: 45%">
             <strong>説明</strong><br>
