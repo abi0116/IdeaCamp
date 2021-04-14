@@ -33,7 +33,7 @@
               <th class = "pl-2" style="width: 25%"><%= attachment_image_tag idea,:image,:fill,100,100,format: "jpg",follback: "no_image.jpg" %></th>
               <td style="width: 45%">
                 <strong><%= link_to idea.title,idea_path(idea.id),data: {"turbolinks" => false} %></strong><br>
-                <%= idea.caption %>
+                <%= idea.caption.truncate(60, omission: '...(以下略') %>
               </td>
               <td class = "pl-2" style="width: 30%">
                 <h6>

@@ -206,3 +206,37 @@ main {
   height: 50px;
   width: 50px;
 }
+
+.new-idea-form {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    font-weight: bold;
+    border: solid 3px black;/*線*/
+    border-radius: 10px;/*角の丸み*/
+}
+.new-idea-form p {
+    margin: 0;
+    padding: 0;
+}
+
+.about_top_logo {
+  background-image: url("about_top.png");
+  background-size: cover;
+  height: 250px;
+}
+
+.about_company_logo {
+  background-image: url("about_company.png");
+  background-size: cover;
+  height: 250px;
+}
+
+.about_company_content {
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 30px;
+}
+
+.index_table {
+  width: 100%;
+}

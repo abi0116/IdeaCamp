@@ -25,12 +25,12 @@
               <% end %>
               </div>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
-              <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "About(使い方等)",about_path,data: {"turbolinks" => false} %></li>
               <% if current_member.is_company == false %>
                 <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id),data: {"turbolinks" => false} %></li>
                 <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
+                <li><%= link_to "すべての採用されたアイディア一覧",ideas_path,data: {"turbolinks" => false} %></li>
               <% end %>
-              <li><%= link_to "すべての採用された投稿一覧",ideas_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete,data: {"turbolinks" => false} %></li>
               <li></li>
               <% if current_member.is_company == false %>
@@ -50,7 +50,7 @@
               <li><%= link_to "ログアウト",destroy_admin_session_path,method: :delete,data: {"turbolinks" => false} %></li>
             <% else %>
               <li><%= link_to "トップ","/",data: {"turbolinks" => false} %></li>
-              <li><%= link_to "このサイトについて","#",data: {"turbolinks" => false} %></li>
+              <li><%= link_to "このサイトについて",about_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "すべての採用された投稿一覧",ideas_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "ログイン",new_member_session_path,data: {"turbolinks" => false} %></li>
               <li><%= link_to "新規登録",new_member_registration_path,data: {"turbolinks" => false} %></li>

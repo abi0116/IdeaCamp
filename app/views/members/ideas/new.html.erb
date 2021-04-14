@@ -1,25 +1,28 @@
 <div class = "container">
   <div class = "row">
     <div class = "new-idea mx-auto">
-      <h1>新規投稿</h1>
-      <%= form_with model:@idea,local: true do |f| %>
-        <%= f.label :title,"アイディア名(必須)" %><br>
-        <%= f.text_field :title %><br><br>
+      <div class = "new-idea-form mt-5 mb-5">
+        <h1>新規投稿</h1>
+        <%= form_with model:@idea,local: true do |f| %>
+          <%= f.label :title,"アイディア名(必須)",class: "mt-3" %><br>
+          <%= f.text_field :title, size: 53 %><br><br>
 
-        <%= f.collection_select :genre_id,Genre.all,:id,:name,include_blank: "選択してください" %><br>
+          <h6>ジャンル</h6>
+          <%= f.collection_select :genre_id,Genre.all,:id,:name,include_blank: "選択してください" %><br>
 
 
-        <%= f.label :tag_list,"タグリスト" %><br>
-        <%= f.text_field :tag_list, value: @idea.tag_list.join(','),placeholder: "例) テント,一人用" %><br>
+          <%= f.label :tag_list,"タグリスト",class: "mt-3" %><br>
+          <%= f.text_field :tag_list, value: @idea.tag_list.join(','),placeholder: "例) テント,一人用",size: 40 %><br>
 
-        <%= f.label :image,"添付したい写真、画像(任意)" %><br>
-        <%= f.attachment_field :image %><br>
+          <%= f.label :image,"添付したい写真、画像(任意)",class: "mt-3" %><br>
+          <%= f.attachment_field :image %><br>
 
-        <%= f.label :caption,"説明(必須)" %><br>
-        <%= f.text_area :caption %><br>
+          <%= f.label :caption,"説明(必須)",class: "mt-3" %><br>
+          <%= f.text_area :caption, size: "60x7" %><br>
 
-        <%= f.submit "投稿" %>
-      <% end %>
+          <%= f.submit "投稿" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
