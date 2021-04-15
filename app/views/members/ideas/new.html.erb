@@ -4,15 +4,19 @@
       <div class = "new-idea-form mt-5 mb-5">
         <h1>新規投稿</h1>
         <%= form_with model:@idea,local: true do |f| %>
-          <%= f.label :title,"アイディア名(必須)",class: "mt-3" %><br>
-          <%= f.text_field :title, size: 53 %><br><br>
+          <%= f.label :title,"アイディア名(必須)",class: "mt-3" %><br><!--tagitイベントで、class名、name、id名が追加される-->
+          <%= f.text_field :title, size: 53, autocomplete: false %><br><br>
 
           <h6>ジャンル</h6>
           <%= f.collection_select :genre_id,Genre.all,:id,:name,include_blank: "選択してください" %><br>
 
-
           <%= f.label :tag_list,"タグリスト",class: "mt-3" %><br>
-          <%= f.text_field :tag_list, value: @idea.tag_list.join(','),placeholder: "例) テント,一人用",size: 40 %><br>
+          <%= f.text_field :tag_list, value: @idea.tag_list.join(","),class: "tag_form tagit-hidden-field" ,name: "idea[tag_list]", id: "idea_tag_list",size: 40 %><br>
+          <!--<ul class = "tagit.ui-widget.ui-widget-content.ui-corner-all">-->
+            <!--<li class = "tagit-new">-->
+              <%#= f.text_field class: "ui-widget-content ui-autocomplete-input", autocomplete: "off", placeholder: "あと10個登録できます" %>  <!-- autocomplete="off" 自動入力の無効化--->
+            <!--</li>-->
+          <!--</ul>-->
 
           <%= f.label :image,"添付したい写真、画像(任意)",class: "mt-3" %><br>
           <%= f.attachment_field :image %><br>

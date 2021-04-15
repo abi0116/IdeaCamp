@@ -70,7 +70,11 @@ class Members::IdeasController < ApplicationController
   def destroy
     @idea = Idea.find(params[:id])
     @idea.destroy
-    redirect_back(fallback_location: root_path)
+    redirect_to member_path(@idea.member.id)
+  end
+
+  def get_tag_search
+    @tags = Idea.tag_counts_on(:tags).where('name LIKE(?)', "%#{params[:key]}%")
   end
 
   private

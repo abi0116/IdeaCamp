@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   scope module: :members do #URLを変えずにルーティング設定[Railsのroutingにおけるscope/namespace/moduleの違い]参照
     resources :members
     resources :ideas do
+      get 'get_tag_search', on: :collection, defaults: { format: 'json' }
+      get 'get_tag_search', on: :member, defaults: { format: 'json' }
       resources :idea_comments, only: [:create,:destroy]
       resource :favorites, only: [:create,:destroy]
     end

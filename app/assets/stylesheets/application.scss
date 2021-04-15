@@ -16,6 +16,8 @@
  @import "bootstrap";
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
+ @import "jquery.tagit";       // 記述の順番に注意
+ @import "tagit.ui-zendesk";   // こっちを後に書かないと、タグ削除（ x ）が表示されない
 
 * {
   margin: 0;
@@ -255,3 +257,20 @@ main {
   margin-top: 20px;
   height: 80%;
 }
+
+.top-image {
+  height: 400px;
+  width: 600px;
+}
+
+.top-photo-1 img {
+}
+
+.top-photo-2 {
+  // background-image: url(4237050_s.jpg);
+}
+
+.top-photo-3 {
+  // background-image: url(4237050_s.jpg);
+}
+

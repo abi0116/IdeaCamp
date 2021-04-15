@@ -4,9 +4,11 @@
     <title>IdeaCamp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </head>
 
   <body>
@@ -28,7 +30,7 @@
               <li><%= link_to "About(使い方等)",about_path %></li>
               <% if current_member.is_company == false %>
                 <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id) %></li>
-                <li><%= link_to "新規アイディア投稿",new_idea_path %></li>
+                <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
                 <li><%= link_to "すべての採用されたアイディア一覧",ideas_path %></li>
               <% end %>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete %></li>
