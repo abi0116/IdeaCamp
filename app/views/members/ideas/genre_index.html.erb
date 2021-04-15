@@ -26,7 +26,7 @@
             <tr>
               <th class = "pl-2" style="width: 25%"><%= attachment_image_tag idea,:image,:fill,100,100,format: "jpg",follback: "no_image.jpg" %></th>
               <td style="width: 45%">
-                <strong><%= link_to idea.title.truncate(55, omission: '...(以下略'),idea_path(idea.id),data: {"turbolinks" => false} %></strong><br>
+                <strong><%= link_to idea.title.truncate(55, omission: '...(以下略'),idea_path(idea.id) %></strong><br>
                 <%= idea.caption.truncate(55, omission: '...(以下略') %>
               </td>
               <td class = "pl-2" style="width: 30%">
@@ -37,7 +37,7 @@
                 <h6>
                   タグ :
                   <% idea.tag_list.each do |tag| %>
-                    <%= link_to tag.truncate(10),ideas_path(tag_name: tag),data: {"turbolinks" => false} %>
+                    <%= link_to tag.truncate(10),ideas_path(tag_name: tag) %>
                   <% end %>
                 </h6>
               </td>
