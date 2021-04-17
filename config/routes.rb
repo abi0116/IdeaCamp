@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :ideas do
       get 'get_tag_search', on: :collection, defaults: { format: 'json' }
       get 'get_tag_search', on: :member, defaults: { format: 'json' }
+      patch "status_update" => "ideas#status_update"
       resources :idea_comments, only: [:create,:destroy]
       resource :favorites, only: [:create,:destroy]
     end

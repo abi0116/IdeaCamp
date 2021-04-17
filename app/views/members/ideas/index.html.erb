@@ -5,7 +5,7 @@
         <% if params[:tag_name] %>
           <h2>タグ [<%= params[:tag_name] %>] の採用されたアイディア一覧</h2>
         <% else %>
-          <h2>採用されたアイディア一覧(全<%= @ideas.count %>件)</h2>
+          <h2>採用されて開発の完了したアイディア一覧(全<%= @ideas.count %>件)</h2>
         <% end %>
       <% else %>
         <% if params[:tag_name] %>
@@ -41,10 +41,10 @@
                 <% end %>
               </td>
               <td>
-                <% if idea.is_adopted == true %>
-                    <P>採用</P>
+                <% if idea.adopted_status == "採用済み(完了済み)" %>
+                    <P>採用済み(完了済み)</P>
                   <% else %>
-                    <P>未採用</P>
+                    <P><%= idea.adopted_status %></P>
                   <% end %>
               </td>
               <td><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>

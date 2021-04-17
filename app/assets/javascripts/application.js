@@ -85,6 +85,7 @@ $(document).on("keyup", '.tagit', function() {
   })
 });
 
+$(document).on('turbolinks:load', function () {
   $(function() {
     $('.top-image').slick({
       dots: true,
@@ -92,4 +93,5 @@ $(document).on("keyup", '.tagit', function() {
       autoplaySpeed: 3000,
       speed: 400
     });
+});
 });

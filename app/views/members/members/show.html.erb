@@ -55,19 +55,22 @@
               </td>
               <td class = "pl-2">
                 コメント:<%= idea.idea_comments.count %>件<br>
-                <% if idea.favorited_by?(current_member) %>
-                  <h6>
-                    <%= link_to idea_favorites_path(idea),method: :delete do %>
-                      ♥<%= idea.favorites.count %>
-                    <% end %>
-                  </h6>
-                <% else %>
-                  <h6>
-                    <%= link_to idea_favorites_path(idea),method: :post do %>
-                      ♡<%= idea.favorites.count %>
-                    <% end %>
-                  </h6>
-                <% end %>
+              <div class = "favorite-btn-<%= idea.id.to_s %>">
+                <%= render 'members/favorites/favorite-btn',idea: idea %>
+              </div>
+                <!--<%# if idea.favorited_by?(current_member) %>-->
+                <!--  <h6>-->
+                <!--    <%#= link_to idea_favorites_path(idea),method: :delete do %>-->
+                <!--      ♥<%#= idea.favorites.count %>-->
+                <!--    <%# end %>-->
+                <!--  </h6>-->
+                <!--<%# else %>-->
+                <!--  <h6>-->
+                <!--    <%#= link_to idea_favorites_path(idea),method: :post do %>-->
+                <!--      ♡<%#= idea.favorites.count %>-->
+                <!--    <%# end %>-->
+                <!--  </h6>-->
+                <!--<%# end %>-->
               </td>
               <td class = "pl-2">
                 <h6>採用ステータス</h6>

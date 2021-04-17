@@ -15,9 +15,9 @@ class Members::IdeasController < ApplicationController
   def index
     if current_member.is_company == false
       if params[:tag_name]
-        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(is_adopted: true).order(created_at: :desc)#採用されている投稿のみ表示
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(adopted_status: "採用済み(完了済み)").order(created_at: :desc)#採用されている投稿のみ表示
       else
-        @ideas = Idea.where(is_adopted: true).order(created_at: :desc)#採用されている投稿のみ表示
+        @ideas = Idea.where(adopted_status: "採用済み(完了済み)").order(created_at: :desc)#採用されている投稿のみ表示
       end
     else
       if params[:tag_name]
@@ -75,6 +75,30 @@ class Members::IdeasController < ApplicationController
 
   def get_tag_search
     @tags = Idea.tag_counts_on(:tags).where('name LIKE(?)', "%#{params[:key]}%")
+  end
+
+  def status_update
+    @idea = Idea.find(params[:idea_id])
+    before_idea_status = @idea.adopted_status_before_type_cast#下で行う条件式の準備、ステータス変更前のenumの値だけを非難させている
+    @idea.adopted_status = params[:idea][:adopted_status] #採用ボタンを押したら採用済み(企画中)にステータス変更,セレクトで更新ボタンを押したたらステータス変更の両方を担っている。
+    @idea.adopted_by_id = current_member.id
+    @idea.save
+    after_idea_status = Idea.adopted_statuses[params[:idea][:adopted_status]]#下で行う条件式の準備、ステータス変更後のenumの値だけを非難させている
+    message = case after_idea_status - before_idea_status #ステータス変更後と変更前の値の引き算(非難した値を使っている)
+    when -1,-10,-100 then
+      "採用を辞めました"
+    when 0 then
+      "ステータスの変更は行われませんでした"
+    when 9 then
+      "この採用を一時的に停止しました"
+    when 90,99 then
+      "このアイディアの開発完了報告ありがとうございます。お疲れさまでした"
+    when -9 then
+      "この停止中のアイディアを再開しました"
+    when -99 then
+      "このアイディアへのステータスが変更されました。今一度操作が正しいか確認をお願いいたします。"
+    end
+    redirect_to idea_path(@idea.id),notice: message
   end
 
   private

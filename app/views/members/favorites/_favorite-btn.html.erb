@@ -1,0 +1,13 @@
+<% if idea.favorited_by?(current_member) %>
+    <p>
+      <%= link_to idea_favorites_path(idea.id), method: :delete,remote: true do %>
+        ♥<%= idea.favorites.count %>
+      <% end %>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to idea_favorites_path(idea.id), method: :post,remote: true do %>
+        ♡<%= idea.favorites.count %>
+      <% end %>
+    </p>
+<% end %>
