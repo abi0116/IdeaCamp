@@ -89,6 +89,8 @@ class Members::IdeasController < ApplicationController
       "採用を辞めました"
     when 0 then
       "ステータスの変更は行われませんでした"
+    when 1 then
+      "このアイディアの採用を開始しました。利用規約に沿った開発をお願いいたします"
     when 9 then
       "この採用を一時的に停止しました"
     when 90,99 then

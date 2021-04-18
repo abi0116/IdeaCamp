@@ -62,7 +62,7 @@
       </nav>
     </header>
     <main>
-      <div class = "notifications">
+      <div class = "notifications"><!--flashメッセージ-->
         <% flash.each do |key,value| %><!-- keyにnotice,valueにメッセージ -->
           <%= content_tag(:div,value,class: key) %><!-- ここの記述よくわからない -->
         <% end %>

@@ -40,7 +40,7 @@
               <%= form_with model:@idea,url: idea_status_update_path(@idea.id),method: :patch,local: true do |f| %>
                 <%#= f.hidden_field :id, :value => @idea.id %><!--誰の何のデータを送るかを明確にしてあげる。今回はpathの中でidを渡しているので不要-->
                 <%#= f.hidden_field :adopted_by_id, :value => current_member.id %>
-                <%= f.hidden_field :adopted_status, {value: "activeidea"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
+                <%= f.hidden_field :adopted_status, {value: "採用済み(企画中)"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
                 <!--今回はした二つのhidden_fieldはコントローラで変更をかけるのでどのideaなのかだけ送ればいい-->
                 <%= f.submit "採用済み(企画中)に変更" %>
               <% end %>
@@ -52,8 +52,8 @@
                 現在のステータス<br><%= @idea.adopted_status %>
               </p>
               <%= form_with model: @idea, method: :patch, url: idea_status_update_path(@idea.id), local: true do |f| %>
-              <%= f.select :adopted_status, Idea.adopted_statuses.keys.to_a, {} %><!--複数選択などがなければ今回のシンプルなシンプルな形でok-->
-              <%= f.submit "更新", class:"btn btn-create" %>
+                <%= f.select :adopted_status, Idea.adopted_statuses.keys.to_a, {} %><!--複数選択などがなければ今回のシンプルなシンプルな形でok-->
+                <%= f.submit "更新", class:"btn btn-create" %>
               <% end %>
             <% end %>
           </td>

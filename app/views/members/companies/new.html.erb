@@ -1,6 +1,6 @@
 <div class = "container">
   <div class = "row">
-    <div class = "companies-form mx-auto border border-secondary mt-3">
+    <div class = "companies-form mx-auto border border-secondary mt-3 mb-3">
 
       <h2>企業申請フォーム</h2>
       <p>
@@ -26,9 +26,13 @@
         1.新規アイディア投稿<br>
         2.企業申請<br>
       </p>
-      <%= form_with model:@company,local: true do |f| %><!--コントローラに方で申請中に変えてもらう。また、ログインメンバーのみで来る作業なのでこちらでidの指定はいらない-->
-        <%= f.submit "上記の内容を受け入れ、申請を行う" %>
-      <% end %>
+      <div class = "row">
+        <div class = "company-btn mx-auto mb-2">
+          <%= form_with model:@company,local: true do |f| %><!--コントローラに方で申請中に変えてもらう。また、ログインメンバーのみで来る作業なのでこちらでidの指定はいらない-->
+            <%= f.submit "上記の内容を受け入れ、申請を行う" %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
