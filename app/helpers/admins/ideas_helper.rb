@@ -1,0 +1,2 @@
+module Admins::IdeasHelper
+end

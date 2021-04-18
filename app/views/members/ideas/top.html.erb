@@ -1,0 +1,102 @@
+<div class = "container mb-3">
+  <div class = "row">
+    <div class = "main-top d-flex mt-4 mx-auto">
+      <div class = "main-top-logo mr-5 mt-4" >
+        <div class = "text-center">
+          <%= image_tag(src= "logo.png", size: "200x200") %>
+        </div>
+        <div class = "box-top" >
+          <p>
+            あったらいいな<br>
+            そんな思いを形にする場所
+          </p>
+        </div>
+      </div>
+      <!--<div class="main-top-logo">-->
+        <div class="top-image">
+          <div class="top-photo-1"><%= image_tag(src= "4237050_s.jpg", size: "600x400") %></div>
+          <div class="top-photo-2"><%= image_tag(src= "top_cycling.jpg", size: "600x400") %></div>
+          <div class="top-photo-3"><%= image_tag(src= "top_skiing.jpg", size: "600x400") %></div>
+        </div>
+        <%#= image_tag(src= "4237050_s.jpg", size: "600x400") %>
+      <!--</div>-->
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "main-content mt-4 mx-auto text-center">
+      <div class = "concept">
+        <h5>コンセプト</h5>
+        <h1>CONCEPT</h1>
+        <%= image_tag(src= "concept.png", size: "700x400") %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class = "genre">
+  <h5>ジャンル</h5>
+  <h1>GENRE</h1>
+  <div class = "genre-icon">
+    <%= link_to genre_path(genre_id: 3) do %><!-- クエリパラメータ、値の受け取りはideaコントローラのgenre_indexで行っている -->
+    <div class = "camp">
+      <%= image_tag(src= "camp.jpg", size: "350x200") %>
+      <h5>キャンプ</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 4) do %>
+    <div class = "tozann">
+      <%= image_tag(src= "tozann.jpg", size: "350x200") %>
+      <h5>登山</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 5) do %>
+    <div class = "climbing">
+      <%= image_tag(src= "climbing.jpg", size: "350x200") %>
+      <h5>クライミング</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 6) do %>
+    <div class = "skiing">
+      <%= image_tag(src= "skiing.jpg", size: "350x200") %>
+      <h5>スキー</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 7) do %>
+    <div class = "kanu-">
+      <%= image_tag(src= "kanu-.jpg", size: "350x200") %>
+      <h5>カヌー</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 8) do %>
+    <div class = "fishing">
+      <%= image_tag(src= "fishing.jpg", size: "350x200") %>
+      <h5>釣り</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 9) do %>
+    <div class = "diving">
+      <%= image_tag(src= "diving.jpg", size: "350x200") %>
+      <h5>ダイビング</h5>
+    </div>
+    <% end %>
+    <%= link_to genre_path(genre_id: 10) do %>
+    <div class = "cycling">
+      <%= image_tag(src= "cycling.jpg", size: "350x200") %>
+      <h5>サイクリング</h5>
+    </div>
+    <% end %>
+  </div>
+</div>
+<div class = "tag-list-box">
+  <div class = "tag-list">
+    <p>タグ一覧</p>
+    <% if @tags.present? %>
+      <% @tags.each do |tag| %>
+        <%= link_to "##{tag.name}(#{tag.taggings_count})",ideas_path(tag_name: tag.name) %>
+      <% end %>
+    <% else %>
+      <p>登録されているタグはありません</p>
+    <% end %>
+  </div>
+  <br>
+</div>
+

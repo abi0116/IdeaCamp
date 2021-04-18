@@ -1,0 +1,57 @@
+<div class = "container">
+  <div class = "row">
+    <div class = "mt-3" style = "width: 100%;">
+      <% if current_member.is_company == false %>
+        <% if params[:tag_name] %>
+          <h2>タグ [<%= params[:tag_name] %>] の採用されたアイディア一覧</h2>
+        <% else %>
+          <h2>採用されて開発の完了したアイディア一覧(全<%= @ideas.count %>件)</h2>
+        <% end %>
+      <% else %>
+        <% if params[:tag_name] %>
+          <h2>タグ [<%= params[:tag_name] %>]  のアイディア一覧(未採用含む)</h2>
+        <% else %>
+          <h2>すべてのアイディア一覧(全<%= @ideas.count %>件)</h2>
+        <% end %>
+      <% end %>
+      <table class = "table index_table">
+        <thead>
+            <tr>
+              <th style="width: 10%">投稿者</th>
+              <th style="width: 10%">Idea名</th>
+              <th style="width: 30%">内容</th>
+              <th style="width: 10%">ジャンル</th>
+              <th style="width: 15%">タグ</th>
+              <th style="width: 15%">採用ステータス</th>
+              <th style="width: 10%">投稿日</th>
+            </tr>
+        </thead>
+        <% @ideas.each do |idea| %>
+          <tbody>
+            <tr>
+              <td><%= idea.member.last_name + idea.member.first_name %></td>
+              <td><strong><%= link_to idea.title.truncate(55, omission: '...(以下略'),idea_path(idea.id) %></strong></td>
+              <td><%= idea.caption.truncate(55, omission: '...(以下略') %></td>
+              <td>
+                <%= idea.genre.name %>
+              </td>
+              <td>
+                <% idea.tag_list.each do |tag| %>
+                  <%= link_to tag.truncate(10),ideas_path(tag_name: tag) %>
+                <% end %>
+              </td>
+              <td>
+                <% if idea.adopted_status == "採用済み(完了済み)" %>
+                    <P>採用済み(完了済み)</P>
+                  <% else %>
+                    <P><%= idea.adopted_status %></P>
+                  <% end %>
+              </td>
+              <td><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

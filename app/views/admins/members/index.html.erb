@@ -1,0 +1,37 @@
+<div class = "container">
+  <div class = "row">
+    <h1>すべてのメンバー一覧</h1>
+    <table class = "table">
+      <% @members.each do |member| %>
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>投稿数</th>
+            <th>採用投稿数</th>
+            <th>企業ステータス</th>
+            <th>登録日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <%= link_to admins_member_path(member.id) do %>
+                <%= member.last_name + member.first_name %>
+              <% end %>
+            </td>
+            <td><%= member.ideas.count %></td>
+            <td><%#= member.idea.is_adopted == true .count %></td>
+            <td>
+              <% if member.is_company == true %>
+                <h6>企業メンバー</h6>
+              <% else %>
+                <h6>一般メンバー</h6>
+              <% end %>
+            </td>
+            <td><%= member.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>

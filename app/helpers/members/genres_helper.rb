@@ -1,0 +1,2 @@
+module Members::GenresHelper
+end

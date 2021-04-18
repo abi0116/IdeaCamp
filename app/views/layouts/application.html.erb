@@ -4,12 +4,75 @@
     <title>IdeaCamp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <h1>Idea Camp</h1>
+      <div class = "openbtn"><span></span><span></span><span></span></div><!--ボタンのHTML-->
+      <nav id = "g-nav">
+        <div id = "g-nav-list"><!--ナビゲーションの内容が増えたときに縦にスクロールさせるためのHTML-->
+          <ul>
+            <% if member_signed_in? %>
+              <div class = "border">
+              <% if current_member.is_company == false %>
+                  <P><%= current_member.last_name + current_member.first_name %> : 一般メンバー</P>
+                <% else %>
+                  <P><%= current_member.last_name + current_member.first_name %> : 企業メンバー</P>
+              <% end %>
+              </div>
+              <li><%= link_to "トップ","/" %></li>
+              <li><%= link_to "About(使い方等)",about_path %></li>
+              <% if current_member.is_company == false %>
+                <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id) %></li>
+                <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
+                <li><%= link_to "すべての採用されたアイディア一覧",ideas_path %></li>
+              <% end %>
+              <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete %></li>
+              <li></li>
+              <% if current_member.is_company == false %>
+                  <li><%= link_to "企業申請",new_company_path %></li>
+                <% else %>
+                  <li><%= link_to "すべてのアイディア一覧",ideas_path %> (企業メンバー限定)</li>
+              <% end %>
+            <% elsif admin_signed_in? %>
+              <div class = "border">
+                <P><%= current_admin.name %> : 管理者</P>
+              </div>
+              <li>管理者</li>
+              <li><%= link_to "すべての投稿一覧",admins_ideas_path %></li>
+              <li><%= link_to "メンバー一覧",admins_members_path %></li>
+              <li><%= link_to "ジャンル一覧",admins_genres_path %></li>
+              <li><%= link_to "企業申請受理",admins_companies_path %></li>
+              <li><%= link_to "ログアウト",destroy_admin_session_path,method: :delete %></li>
+            <% else %>
+              <li><%= link_to "トップ","/" %></li>
+              <li><%= link_to "このサイトについて",about_path %></li>
+              <li><%= link_to "すべての採用された投稿一覧",ideas_path %></li>
+              <li><%= link_to "ログイン",new_member_session_path %></li>
+              <li><%= link_to "新規登録",new_member_registration_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class = "notifications"><!--flashメッセージ-->
+        <% flash.each do |key,value| %><!-- keyにnotice,valueにメッセージ -->
+          <%= content_tag(:div,value,class: key) %><!-- ここの記述よくわからない -->
+        <% end %>
+      </div>
+      <%= yield %>
+      <div id = "back"><!-- ページトップリンク -->
+        <%= link_to "#" do %>
+          <%= image_tag(src= "page_top_link.png", size: "350x200") %>
+        <% end %>
+      </div>
+    </main>
   </body>
 </html>
