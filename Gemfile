@@ -71,3 +71,8 @@ gem 'acts-as-taggable-on', '~> 6.0'
 
 gem 'pry-byebug'
 gem 'jquery-ui-rails'#tag-itのjem
+
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
