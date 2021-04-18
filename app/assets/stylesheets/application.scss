@@ -137,7 +137,7 @@ nav ul li a{
 header {
   width: 100%;
   height: 80px;
-  background-image: image-url(header_green.png);
+  background-image: image-url("header_green.png");
   background-size: cover;
   background-position: down;
   color: white;
@@ -148,7 +148,7 @@ header h1 {
 }
 
 main {
-  background-image: image-url(retina_wood.png);
+  background-image: image-url("retina_wood.png");
   background-size: cover;
 }
 
