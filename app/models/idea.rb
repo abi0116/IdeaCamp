@@ -7,6 +7,11 @@ class Idea < ApplicationRecord
   has_many :favorites,dependent: :destroy
   belongs_to :genre
 
+  # validates :title, presence: true
+  # validates :caption, presence: true
+  # validates :genre_id, presence: true
+  # validates :image_id, presence: true
+
   enum adopted_status: {
       "選考中(未採用)": 0,#選考中(未採用)
       "採用済み(企画中)": 1,#採用済み(企画中)

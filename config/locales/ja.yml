@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    models:
+      member: メンバー
+    attributes:
+      idea:
+        title: タイトル
+        caption: 説明
+        genre: ジャンル
+        image_id: 画像

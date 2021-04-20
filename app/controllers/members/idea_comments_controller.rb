@@ -1,5 +1,7 @@
 class Members::IdeaCommentsController < ApplicationController
 
+  before_action :authenticate_member!
+
   def create
     @idea = Idea.find(params[:idea_id])
     @idea_comment = IdeaComment.new#どっちにしろフォームで使っているから用意してあげる

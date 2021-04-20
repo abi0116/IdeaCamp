@@ -1,6 +1,6 @@
 <%#= if current_member.id == @idea.member_id %>
 <!--<h1>マイページ</h1>-->
-<div class = "container">
+<div class = "container" style = "min-height:550px;">
   <div class = "row">
     <div class = "col-md-3">
       <h2>メンバー情報</h2>
@@ -10,6 +10,7 @@
       <%= @member.ideas.count %>件
       <h4>採用投稿数</h4>
       <%= @member.ideas.where(is_adopted: "true").count %>件<br>
+      <%= link_to "メンバー情報編集",edit_member_path(current_member.id),data: {"turbolinks" => false} %>
       <div class = "box-myranks" >
         <p>いいね数ランキング</p>
         <% @my_ranks.each.with_index(1) do |idea,i| %><!-- ランキング機能「Railsでお手軽ランキング機能」参照 -->

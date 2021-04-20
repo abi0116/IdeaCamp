@@ -1,5 +1,7 @@
 class Members::MembersController < ApplicationController
 
+  before_action :authenticate_member!
+
   def show
     @member = Member.find(params[:id])
     @ideas = @member.ideas.order(created_at: :desc)
@@ -8,9 +10,19 @@ class Members::MembersController < ApplicationController
   end
 
   def edit
+    @member = Member.find(params[:id])
+    if current_member != @member
+      redirect_to root_path
+    end
   end
 
   def update
+    @member = Member.find(params[:id])
+    if @member.update(member_params)
+      redirect_to member_path(@member.id)
+    else
+      render :edit
+    end
   end
 
   def leave
@@ -24,5 +36,11 @@ class Members::MembersController < ApplicationController
 
   def complete
   end
+
+ private
+
+ def member_params
+   params.require(:member).permit(:last_name,:first_name,:postal_code,:address,:telephone_number,:email)
+ end
 
 end

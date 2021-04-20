@@ -1,17 +1,23 @@
-<div class = "container">
+<div class = "container" style = "min-height:550px;">
   <div class = "row">
     <div class = "mt-3" style = "width: 100%;">
-      <% if current_member.is_company == false %>
+      <% if current_member.present? && current_member.is_company == false %><!--一般メンバー用--->
         <% if params[:tag_name] %>
           <h2>タグ [<%= params[:tag_name] %>] の採用されたアイディア一覧</h2>
         <% else %>
           <h2>採用されて開発の完了したアイディア一覧(全<%= @ideas.count %>件)</h2>
         <% end %>
-      <% else %>
+      <% elsif current_member.present? && current_member.is_company == true %><!--企業メンバー用--->
         <% if params[:tag_name] %>
           <h2>タグ [<%= params[:tag_name] %>]  のアイディア一覧(未採用含む)</h2>
         <% else %>
           <h2>すべてのアイディア一覧(全<%= @ideas.count %>件)</h2>
+        <% end %>
+      <% else %><!--非ログインメンバー用--->
+        <% if params[:tag_name] %>
+          <h2>タグ [<%= params[:tag_name] %>] の採用されたアイディア一覧</h2>
+        <% else %>
+          <h2>採用されて開発の完了したアイディア一覧(全<%= @ideas.count %>件)</h2>
         <% end %>
       <% end %>
       <table class = "table index_table">

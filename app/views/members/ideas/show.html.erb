@@ -14,10 +14,12 @@
             <strong>作成日</strong><br>
             <%= @idea.created_at.strftime("%Y/%m/%d %H:%M") %><br><br>
             <%# if @idea.favorited_by?(current_member) %><!--テンプレートと重複するのでコメントアウト--->
-            <div class = "favorite-btn-<%= @idea.id.to_s %>">
-              <%= render 'members/favorites/favorite-btn',idea: @idea %>
-            </div>
-            <!--  <p>非同期通信化したかったから部分テンプレートに記述した-->
+            <% if current_member.present? %>
+              <div class = "favorite-btn-<%= @idea.id.to_s %>">
+                <%= render 'members/favorites/favorite-btn',idea: @idea %>
+              </div>
+            <% end %>
+            <!--  <p>非同期通信化にしたので部分テンプレートに記述-->
             <!--    <%#= link_to idea_favorites_path(@idea.id),method: :delete do %>-->
             <!--      ♥<%#= @idea.favorites.count %>-->
             <!--    <%# end %>-->
@@ -33,33 +35,42 @@
               <%= link_to "編集",edit_idea_path(@idea.id) %>
               <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
             <% end %>
-            <% if current_member.is_company == true && @idea.adopted_status == "選考中(未採用)" %>
-              このアイディアは現在、未採用です<br>
-              採用が可能ですがいかがされますか？<br>
-              ※採用を行う場合はaboutページ記載の利用規約に準じて開発を進めてください
-              <%= form_with model:@idea,url: idea_status_update_path(@idea.id),method: :patch,local: true do |f| %>
-                <%#= f.hidden_field :id, :value => @idea.id %><!--誰の何のデータを送るかを明確にしてあげる。今回はpathの中でidを渡しているので不要-->
-                <%#= f.hidden_field :adopted_by_id, :value => current_member.id %>
-                <%= f.hidden_field :adopted_status, {value: "採用済み(企画中)"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
-                <!--今回はした二つのhidden_fieldはコントローラで変更をかけるのでどのideaなのかだけ送ればいい-->
-                <%= f.submit "採用済み(企画中)に変更" %>
-              <% end %>
-            <% else %>
-              <p>
-                アイディアの採用者様id<br>メンバーid:<%= @idea.adopted_by_id %>
-              </p>
-              <p>
-                現在のステータス<br><%= @idea.adopted_status %>
-              </p>
-              <%= form_with model: @idea, method: :patch, url: idea_status_update_path(@idea.id), local: true do |f| %>
-                <%= f.select :adopted_status, Idea.adopted_statuses.keys.to_a, {} %><!--複数選択などがなければ今回のシンプルなシンプルな形でok-->
-                <%= f.submit "更新", class:"btn btn-create" %>
+            <% if current_member.present? %>
+              <% if current_member.is_company == true && @idea.adopted_status == "選考中(未採用)" %>
+                このアイディアは現在、未採用です<br>
+                採用が可能ですがいかがされますか？<br>
+                ※採用を行う場合はaboutページ記載の利用規約に準じて開発を進めてください
+                <%= form_with model:@idea,url: idea_status_update_path(@idea.id),method: :patch,local: true do |f| %>
+                  <%#= f.hidden_field :id, :value => @idea.id %><!--誰の何のデータを送るかを明確にしてあげる。今回はpathの中でidを渡しているので不要-->
+                  <%#= f.hidden_field :adopted_by_id, :value => current_member.id %>
+                  <%= f.hidden_field :adopted_status, {value: "採用済み(企画中)"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
+                  <!--今回はした二つのhidden_fieldはコントローラで変更をかけるのでどのideaなのかだけ送ればいい-->
+                  <%= f.submit "採用済み(企画中)に変更" %>
+                <% end %>
+              <% elsif current_member.is_company == true %>
+                <p>
+                  アイディアの採用者様id<br>メンバーid:<%= @idea.adopted_by_id %>
+                </p>
+                <p>
+                  現在のステータス<br><%= @idea.adopted_status %>
+                </p>
+                <%= form_with model: @idea, method: :patch, url: idea_status_update_path(@idea.id), local: true do |f| %>
+                  <%= f.select :adopted_status, Idea.adopted_statuses.keys.to_a, {} %><!--複数選択などがなければ今回のシンプルなシンプルな形でok-->
+                  <%= f.submit "更新", class:"btn btn-create" %>
+                <% end %>
+              <% else %>
+                <p>
+                  アイディアの採用者様id<br>メンバーid:<%= @idea.adopted_by_id %>
+                </p>
+                <p>
+                  現在のステータス<br><%= @idea.adopted_status %>
+                </p>
               <% end %>
             <% end %>
           </td>
           <td style="width: 30%">
             <strong>写真、画像</strong><br>
-            <%= attachment_image_tag @idea,:image,:fill,370,320,format: "jpg",follback: "no_image.jpg" %>
+            <%= attachment_image_tag @idea,:image,:fill,370,320,format: "jpg",follback: image_url("no_image.jpg") %>
           </td>
           <td style="width: 45%">
             <strong>説明</strong><br>
@@ -70,7 +81,7 @@
       <div class = "comment-space-<%= @idea.id.to_s %>">
         <%= render "members/idea_comments/idea-comments-form",idea: @idea %>
       </div>
-      <!--<h4>コメント</h4>-->
+      <!--<h4>コメント</h4>非同期化につき、コメントアウト-->
       <!--<div class = "row mb-4">-->
       <!--  <div class = "new-comments col-md-5" >-->
       <!--    <p>コメント件数:<%#= @idea.idea_comments.count %></p>-->

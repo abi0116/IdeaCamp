@@ -31,7 +31,7 @@
               <% if current_member.is_company == false %>
                 <li><%= link_to "マイページ(自分の投稿一覧)",member_path(current_member.id) %></li>
                 <li><%= link_to "新規アイディア投稿",new_idea_path,data: {"turbolinks" => false} %></li>
-                <li><%= link_to "すべての採用されたアイディア一覧",ideas_path %></li>
+                <li><%= link_to "開発が完了したアイディア一覧",ideas_path %></li>
               <% end %>
               <li><%= link_to "ログアウト",destroy_member_session_path,method: :delete %></li>
               <li></li>
@@ -53,7 +53,7 @@
             <% else %>
               <li><%= link_to "トップ","/" %></li>
               <li><%= link_to "このサイトについて",about_path %></li>
-              <li><%= link_to "すべての採用された投稿一覧",ideas_path %></li>
+              <li><%= link_to "開発が完了したアイディア一覧",ideas_path %></li>
               <li><%= link_to "ログイン",new_member_session_path %></li>
               <li><%= link_to "新規登録",new_member_registration_path %></li>
             <% end %>
