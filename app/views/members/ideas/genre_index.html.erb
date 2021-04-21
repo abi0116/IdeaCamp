@@ -1,25 +1,25 @@
-<div class = "container">
+<div class = "container" style = "min-height:550px;">
   <div class = "row">
-    <div class = "col-md-3">
-      <h4>投稿数</h4>
-      <%= @ideas.count %>件
-      <h4>採用投稿数</h4>
-      <%= @ideas.where(is_adopted: "true").count %>件<br>
-       <div class = "box-myranks" >
-        <p>いいね数ランキング</p>
-        <% @genre_ranks.each.with_index(1) do |idea,i| %><!-- ランキング機能「Railsでお手軽ランキング機能」参照 -->
-         <p>
-            第
-            <%= i %>
-            位
-            <%= idea.title %><br>
-            いいねの数 : <%= idea.favorites.count %><br>
-          </p>
-        <% end %>
-      </div>
+    <div class = "col-md-3 mt-5">
+      <h4>開発完了済み投稿数</h4>
+      <%= @ideas.where(adopted_status: "採用済み(完了済み)").count %>件<br>
+      <% if @idea.present? %>
+        <div class = "box-myranks" >
+          <p>いいね数ランキング</p>
+          <% @genre_ranks.each.with_index(1) do |idea,i| %><!-- ランキング機能「Railsでお手軽ランキング機能」参照 -->
+            <p>
+              第
+              <%= i %>
+              位
+              <%= idea.title %><br>
+              いいねの数 : <%= idea.favorites.count %><br>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-    <div class = "col-md-9">
-      <h2 class = "mb-3"><%= @genre_name %>アイディア投稿一覧(全<%= @ideas.count %>件)</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
+    <div class = "col-md-9 mt-5">
+      <h2 class = "mb-3"><%= @genre_name %>開発完了済みアイディア投稿一覧(全<%= @ideas.count %>件)</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
       <% @ideas.each do |idea| %>
         <div class = "border border-info rounded mb-3">
           <table class = "table table-borderless table-sm">
@@ -49,24 +49,14 @@
               </td>
               <td class = "pl-2">
                 コメント:<%= idea.idea_comments.count %>件<br>
-                <% if idea.favorited_by?(current_member) %>
-                  <h6>
-                    <%= link_to idea_favorites_path(idea),method: :delete do %>
-                      ♥<%= idea.favorites.count %>
-                    <% end %>
-                  </h6>
-                <% else %>
-                  <h6>
-                    <%= link_to idea_favorites_path(idea),method: :post do %>
-                      ♡<%= idea.favorites.count %>
-                    <% end %>
-                  </h6>
-                <% end %>
+                <div class = "favorite-btn-<%= @idea.id.to_s %>">
+                  <%= render 'members/favorites/favorite-btn',idea: @idea %>
+                </div>
               </td>
               <td class = "pl-2">
                 <h6>採用ステータス</h6>
-                <% if idea.is_adopted == true %>
-                  <h6>採用</h6>
+                <% if idea.adopted_status == "採用済み(完了済み)" %>
+                  <h6>採用(開発済み)</h6>
                 <% else %>
                   <h6>未採用</h6>
                 <% end %>

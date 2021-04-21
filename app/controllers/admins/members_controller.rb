@@ -1,5 +1,7 @@
 class Admins::MembersController < ApplicationController
 
+  before_action :authenticate_admin!
+
   def index
     @members = Member.all
   end

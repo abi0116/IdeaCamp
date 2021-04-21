@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_110857) do
+ActiveRecord::Schema.define(version: 2021_04_21_043757) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_110857) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "genre_id"
-    t.integer "adopted_by_id"#外部キーでmemberとつなげたので自動的に_idが追加
+    t.integer "adopted_by_id"
     t.integer "adopted_status", default: 0, null: false
     t.index ["adopted_by_id"], name: "index_ideas_on_adopted_by_id"
   end
@@ -84,6 +84,21 @@ ActiveRecord::Schema.define(version: 2021_04_14_110857) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "visitor_id", null: false
+    t.integer "visited_id", null: false
+    t.integer "idea_id"
+    t.integer "comment_id"
+    t.string "action", default: "", null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_notifications_on_comment_id"
+    t.index ["idea_id"], name: "index_notifications_on_idea_id"
+    t.index ["visited_id"], name: "index_notifications_on_visited_id"
+    t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
   create_table "taggings", force: :cascade do |t|

@@ -1,5 +1,7 @@
 class Members::IdeasController < ApplicationController
 
+  before_action :authenticate_member!,except: [:top,:about,:index,:show]
+
   def top
     @ideas = Idea.all
     @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
@@ -13,17 +15,23 @@ class Members::IdeasController < ApplicationController
   end
 
   def index
-    if current_member.is_company == false
+    if current_member.present? && current_member.is_company == false#一般メンバー用
       if params[:tag_name]
-        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(adopted_status: "採用済み(完了済み)").order(created_at: :desc)#採用されている投稿のみ表示
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(adopted_status: "採用済み(完了済み)").page(params[:page]).per(5).order(created_at: :desc)#採用されている投稿のみ表示
       else
-        @ideas = Idea.where(adopted_status: "採用済み(完了済み)").order(created_at: :desc)#採用されている投稿のみ表示
+        @ideas = Idea.where(adopted_status: "採用済み(完了済み)").page(params[:page]).per(5).order(created_at: :desc)#採用されている投稿のみ表示
+      end
+    elsif current_member.present? && current_member.is_company == true#企業メンバー用
+      if params[:tag_name]
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").page(params[:page]).per(5).order(created_at: :desc)#すべての投稿を表示
+      else
+        @ideas = Idea.page(params[:page]).per(5).order(created_at: :desc)#すべての投稿を表示
       end
     else
       if params[:tag_name]
-        @ideas = Idea.tagged_with("#{params[:tag_name]}").order(created_at: :desc)#すべての投稿を表示
+        @ideas = Idea.tagged_with("#{params[:tag_name]}").where(adopted_status: "採用済み(完了済み)").page(params[:page]).per(5).order(created_at: :desc)#採用されている投稿のみ表示
       else
-        @ideas = Idea.order(created_at: :desc)#すべての投稿を表示
+        @ideas = Idea.where(adopted_status: "採用済み(完了済み)").page(params[:page]).per(5).order(created_at: :desc)#採用されている投稿のみ表示
       end
     end
     @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
@@ -31,12 +39,16 @@ class Members::IdeasController < ApplicationController
   end
 
   def genre_index
-    @ideas = Idea.where("genre_id = ?",params[:genre_id]).order(created_at: :desc)#クエリパラメータの値を受け取っている,/genle?genre_id=3←トップのリンクで指定した
+    @ideas = Idea.where("genre_id = ?",params[:genre_id]).where(adopted_status: "採用済み(完了済み)").page(params[:page]).per(5).order(created_at: :desc)#クエリパラメータの値を受け取っている,/genle?genre_id=3←トップのリンクで指定した
+    @idea = Idea.where("genre_id = ?",params[:genre_id]).find_by(adopted_status: "採用済み(完了済み)")
     @genre_name = Genre.find(params[:genre_id]).name#genle_idはideaのカラムだが、そもそもそれれはGenreのidでもあるので、このようにして引っ張ってこれる
-    @all_ranks = Idea.find(Favorite.group(:idea_id).order("count(idea_id) desc").limit(3).pluck(:idea_id))
-    @genre_ranks = @all_ranks.select{ |idea| idea.genre_id == Idea.where("genre_id = ?",params[:genre_id])}
+    @all_ranks = Idea.find(Favorite.group(:idea_id).order("count(idea_id) desc").limit(3).pluck(:idea_id))#全体のランキング
+    if @idea.present?#ジャンルごとに開発完了済みのアイディアが存在するならば以下のコードでランキング表示
+      @genre_rankss = @all_ranks.select{ |idea| idea.genre_id == @idea.genre_id}#ジャンルごとのランキング
+      @genre_ranks = @genre_rankss.select{ |idea| idea.adopted_status == "採用済み(完了済み)"}#ジャンル(すてーたたすが完了済み限定)のランキング
+    end
   end
-
+#"genre_id = ?",params[:genre_id]
 
   def show
     @idea = Idea.find(params[:id])
@@ -44,10 +56,15 @@ class Members::IdeasController < ApplicationController
   end
 
   def create
+    #byebug
     @idea = Idea.new(idea_params)
     @idea.member_id = current_member.id
-    @idea.save
-    redirect_to idea_path(@idea.id)
+    #byebug
+    if @idea.save
+      redirect_to idea_path(@idea.id)
+    else
+      render :new
+    end
   end
 
   def edit
@@ -102,6 +119,7 @@ class Members::IdeasController < ApplicationController
     end
     redirect_to idea_path(@idea.id),notice: message
   end
+
 
   private
 

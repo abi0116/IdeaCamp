@@ -1,0 +1,42 @@
+<div class = "container" style = "height:550px;">
+  <div class = "row">
+    <h1 class = "text-center p-3 mb-2">メンバー情報編集画面</h1>
+      <table class = " table d-flex justify-content-around text-center ">
+        <%= form_with model: @member, url: member_path(current_member.id), method: :patch, local: true do |f| %>
+          <tr>
+           <p><th>氏名</th></p>
+            <th><%= f.text_field :last_name, class: "col-md-12 text-center" %></th>
+            <th><%= f.text_field :first_name, class: "col-md-12 text-center" %></th>
+          </tr>
+          <tr>
+            <th>郵便番号</th>
+            <th colspan = "2"><%= f.text_field :postal_code, class: "col-md-12 text-center" %></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <th colspan = "2"><%= f.text_field :address, class: "col-md-12 text-center" %></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <th colspan = "2"><%= f.telephone_field :telephone_number, class: "col-md-12 text-center" %></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>メールアドレス<br>(ログインで使用するため、基本的には変更をお勧めしません)</th>
+            <th colspan = "2"><%= f.email_field :email, class: "col-md-12 text-center" %></th>
+            <th></th>
+          </tr>
+
+            <div class = "row">
+              <div class = "mx-auto" >
+                <th><%= f.submit "変更する" %></th>
+              </div>
+            </div>
+
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

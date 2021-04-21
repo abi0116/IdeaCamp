@@ -1,5 +1,7 @@
 class Members::CompaniesController < ApplicationController
 
+  before_action :authenticate_member!
+
   def new
     @company = Company.new#既にenumでデフォルトがあるため、newではない?
   end

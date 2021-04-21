@@ -1,5 +1,7 @@
 class Admins::CompaniesController < ApplicationController
 
+  before_action :authenticate_admin!
+
   def index
     @members = Member.joins(:company).where("companies.status = 1")#申請中のmemberのみ表示、memberを複数呼びたいためこの条件が難しい。テーブル結合後(joinでmembersテーブルとcompaniesテーブル)にwhereで検索を行っている。SQLの書き方なのでwhereの中身はステータスがどんな値で保存されているかをもとに引っ張て来る(今回はenumなので1で持ってきている)
     @company = Company.find_by(member_id: params[:id] )

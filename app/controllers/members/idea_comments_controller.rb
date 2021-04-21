@@ -1,11 +1,14 @@
 class Members::IdeaCommentsController < ApplicationController
 
+  before_action :authenticate_member!
+
   def create
     @idea = Idea.find(params[:idea_id])
     @idea_comment = IdeaComment.new#どっちにしろフォームで使っているから用意してあげる
     comment = current_member.idea_comments.new(idea_comment_params)
     comment.idea_id = @idea.id
     comment.save
+    # @idea.create_notification_comment!(current_member, @idea_comment.id)
     #redirect_to idea_path(idea.id)
   end
 

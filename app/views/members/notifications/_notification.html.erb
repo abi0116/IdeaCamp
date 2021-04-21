@@ -1,0 +1,43 @@
+<!--<div class = "container">-->
+<!--  <div class = "row">-->
+<!--    <%# visitor = notification.visitor %>-->
+<!--    <%# visited = notification.visited %>-->
+<!--     <div class = "col-md-6 mx-auto" >-->
+<!--       <div class = "form-inline">-->
+<!--        <span>-->
+        <%#= link_to member_path(visitor) do %>
+          <%#= image_tag avatar_url(visitor).to_s, class: "icon_mini" %>
+        <%# end %>
+<!--        </span>-->
+<!--        <strong>-->
+<!--          <%#= visitor.last_name + visitor.first_name %>-->
+<!--          <%#= 'さんが' %>-->
+<!--        </strong>-->
+<!--        <%# case notification.action %>-->
+<!--        <%# when 'favorite' then %>-->
+<!--          <%#= link_to 'あなたの投稿', notification.idea, style: "font-weight: bold;" %>-->
+<!--          <%#= "にいいねしました" %>-->
+<!--        <%# when 'comment' then %>-->
+<!--          <%# if notification.idea.member_id == visited.id %>-->
+<!--            <%#= link_to "あなたの投稿", notification.idea, style: "font-weight: bold;" %>-->
+<!--          <%# end %>-->
+<!--        <%# else %>-->
+<!--          <span>-->
+<!--            <%#= link_to post_path(notification.post) do %>-->
+<!--              <%#= image_tag avatar_url(notification.idea.member).to_s, class: "icon_mini" %>-->
+<!--              <strong>-->
+<!--                <%#= notification.post.user.name + 'さんの投稿' %>-->
+<!--              </strong>-->
+<!--            <%# end %>-->
+<!--          </span>-->
+<!--        <%#= "にコメントしました" %>-->
+<!--        <p class = "text-muted mb-0">-->
+<!--          <%#= IdeaComment.find_by(id: notification.comment_id)&.comment %>-->
+<!--        </p>-->
+<!--        <div class = "small text-muted text-right" >-->
+<!--          <%#= time_ago_in_words(notification.created_at).upcase %>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

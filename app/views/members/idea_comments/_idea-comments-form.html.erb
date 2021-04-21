@@ -2,9 +2,11 @@
 <div class = "row mb-4">
   <div class = "new-comments col-md-5" >
     <p>コメント件数:<%= idea.idea_comments.count %></p>
-    <%= form_with(model:[idea,@idea_comment]) do |f| %>
-      <%= f.text_area :comment,row:"15",placeholder: "コメント記入欄" %>
-      <%= f.submit "送信する" %>
+    <% if current_member.present? %>
+      <%= form_with(model:[idea,@idea_comment]) do |f| %>
+        <%= f.text_area :comment,row:"15",placeholder: "コメント記入欄" %>
+        <%= f.submit "送信する" %>
+      <% end %>
     <% end %>
   </div>
   <div class = "comment-log col-md-7 mb-4">
