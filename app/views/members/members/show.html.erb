@@ -9,8 +9,14 @@
       <h4>投稿数</h4>
       <%= @member.ideas.count %>件
       <h4>採用投稿数</h4>
-      <%= @member.ideas.where(is_adopted: "true").count %>件<br>
-      <%= link_to "メンバー情報編集",edit_member_path(current_member.id),data: {"turbolinks" => false} %>
+      <%= @member.ideas.where(adopted_status: "採用済み(完了済み)").count %>件<br>
+      <% if @member.id == current_member.id %>
+        <div class = "edit-btn text-center">
+          <%= link_to edit_member_path(current_member.id),data: {"turbolinks" => false} do %>
+            <%= image_tag(src= "edit-btn.png", size: "150x50") %>
+          <% end %>
+        </div>
+      <% end %>
       <div class = "box-myranks" >
         <p>いいね数ランキング</p>
         <% @my_ranks.each.with_index(1) do |idea,i| %><!-- ランキング機能「Railsでお手軽ランキング機能」参照 -->
@@ -25,8 +31,8 @@
       </div>
     </div>
     <div class = "col-md-9">
-      <% if current_member.id == @member.id %>
-        <h2 class = "mb-3">自分のアイディア投稿一覧</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
+      <% if current_member.id == @member.id || current_member.is_company == true %>
+        <h2 class = "mb-3"><%= @member.last_name + @member.first_name %>のアイディア投稿一覧</h2><!-- 自分の投稿は採用ステータスがtrueじゃなくても表示 -->
         <% @ideas.each do |idea| %>
           <div class = "border border-info rounded mb-3">
           <table class = "table table-borderless table-sm">
@@ -59,19 +65,6 @@
               <div class = "favorite-btn-<%= idea.id.to_s %>">
                 <%= render 'members/favorites/favorite-btn',idea: idea %>
               </div>
-                <!--<%# if idea.favorited_by?(current_member) %>-->
-                <!--  <h6>-->
-                <!--    <%#= link_to idea_favorites_path(idea),method: :delete do %>-->
-                <!--      ♥<%#= idea.favorites.count %>-->
-                <!--    <%# end %>-->
-                <!--  </h6>-->
-                <!--<%# else %>-->
-                <!--  <h6>-->
-                <!--    <%#= link_to idea_favorites_path(idea),method: :post do %>-->
-                <!--      ♡<%#= idea.favorites.count %>-->
-                <!--    <%# end %>-->
-                <!--  </h6>-->
-                <!--<%# end %>-->
               </td>
               <td class = "pl-2">
                 <h6>採用ステータス</h6>
@@ -86,22 +79,15 @@
           </div>
         <% end %>
       <% else %>
-        <h2>採用されたアイディア投稿一覧(未採用は非表示)</h2><!-- 他人の投稿は採用ステータスがtrueのアイディアのみ表示 -->
-        <% @ideas.each do |idea| %>
-          <h4>タイトル</h4>
-          <%= idea.title %>
-          <h4>説明文</h4>
-          <%= idea.caption %>
-          <h4>タグ</h4>
-          <br>
-          <h4>投稿日</h4>
-          <%= idea.created_at.strftime("%Y/%m/%d %H:%M") %>
-          <h4>コメント数</h4>
-          <br>
-          <h4>いいね数</h4>
-          <br>
-        <% end %>
+        <div class = "mt-3">
+          <h2>自分以外のメンバーのアイディア一覧は<br>閲覧できません</h2>
+        </div>
       <% end %>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "mb-2 mx-auto">
+      <%= paginate @ideas %>
     </div>
   </div>
 </div>

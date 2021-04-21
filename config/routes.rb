@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   }
 
   scope module: :members do #URLを変えずにルーティング設定[Railsのroutingにおけるscope/namespace/moduleの違い]参照
-    resources :members
+    resources :members do
+      get "adopt_idea" => "members#adopt_idea"
+    end
     resources :ideas do
       get 'get_tag_search', on: :collection, defaults: { format: 'json' }
       get 'get_tag_search', on: :member, defaults: { format: 'json' }
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
     get "about" => "ideas#about"
     get "genre" => "ideas#genre_index"
     resources :companies,only: [:new,:create]
+    resources :notifications, only: :index
   end
 
   namespace :admins do

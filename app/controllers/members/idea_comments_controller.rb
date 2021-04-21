@@ -8,6 +8,7 @@ class Members::IdeaCommentsController < ApplicationController
     comment = current_member.idea_comments.new(idea_comment_params)
     comment.idea_id = @idea.id
     comment.save
+    # @idea.create_notification_comment!(current_member, @idea_comment.id)
     #redirect_to idea_path(idea.id)
   end
 

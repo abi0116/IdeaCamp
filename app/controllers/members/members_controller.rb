@@ -4,7 +4,7 @@ class Members::MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @ideas = @member.ideas.order(created_at: :desc)
+    @ideas = @member.ideas.page(params[:page]).per(5).order(created_at: :desc)
     @all_ranks = Idea.find(Favorite.group(:idea_id).order("count(idea_id) desc").limit(3).pluck(:idea_id))
     @my_ranks = @all_ranks.select{ |idea| idea.member_id == current_member.id }
   end
@@ -22,6 +22,14 @@ class Members::MembersController < ApplicationController
       redirect_to member_path(@member.id)
     else
       render :edit
+    end
+  end
+
+  def adopt_idea
+    if current_member.is_company == true
+    @ideas = Idea.where(adopted_by_id: current_member.id)
+    else
+      redirect_to root_path
     end
   end
 

@@ -18,5 +18,8 @@ class Member < ApplicationRecord
   has_many :idea_comments,dependent: :destroy
   has_many :favorites,dependent: :destroy
   has_one :company,dependent: :destroy
+  #通知機能のアソシエーション
+  # has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
+  # has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
 
 end

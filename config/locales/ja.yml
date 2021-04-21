@@ -6,5 +6,5 @@ ja:
       idea:
         title: タイトル
         caption: 説明
-        genre: ジャンル
-        image_id: 画像
+        genre_id: ジャンル
+        image: 画像
