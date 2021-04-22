@@ -1,22 +1,46 @@
-<h2>企業申請受理</h2>
-<p>申請受理メンバー一覧</p>
-<% @members.each do |member| %>
-  <%= member.last_name + member.first_name %>
-  <%= member.company.created_at.strftime("%Y/%m/%d %H:%M") %>
-  <%#= link_to "受理",admins_company_path(member.company.id),method: :patch,params: { status: Company.statuses[:acceptance] } %><!--link_toでupdateアクションに決まった値を送る[link_to,button_toでcreate, updateを行う]参照。{}内はenum特有の書き方を用いている--->
-  <%#= link_to "不受理",admins_company_path(member.company.id),method: :patch,params: { status: Company.statuses[:rejected] } %><!--link_toではpatchは送れない--->
-  <%= form_with model:@company,url: admins_company_path(member.id),method: :patch,local: true do |f| %>
-    <%= f.hidden_field :id, :value => member.company.id %><!--indexから送るので誰の何のデータを送るかを明確にしてあげる-->
-    <%= f.hidden_field :member_id, :value => member.id %>
-    <%#= f.hidden_field :status, :value => acceptance %><!--左のいつものhidden_fieldの書き方ではenumの値を持たせられない-->
-    <%= f.hidden_field :status, {value: "acceptance"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
-    <%= f.submit "受理" %>
-  <% end %>
-  <%= form_with model:@company,url: admins_company_path(member.id),method: :patch,local: true do |f| %>
-    <%= f.hidden_field :id, :value => member.company.id %><!--indexから送るので誰の何のデータを送るかを明確にしてあげる-->
-    <%= f.hidden_field :member_id, :value => member.id %>
-    <%#= f.hidden_field :status, :value => rejected %><!--左のいつものhidden_fieldの書き方ではenumの値を持たせられない-->
-    <%= f.hidden_field :status, {value: "rejected"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
-    <%= f.submit "不受理" %>
-  <% end %>
-<% end %>
+<div class = "container" style = "min-height:550px;">
+  <div class = "row">
+    <h2 class = "mt-3">企業申請受理</h2>
+    <table class = "table table-hover">
+      <thead>
+        <tr>
+          <th style="width: 35%">申請者</th>
+          <th style="width: 35%">企業申請日</th>
+          <th style="width: 30%">申請対応</th>
+        </tr>
+      </thead>
+      <% @members.each do |member| %>
+        <tbody>
+          <tr>
+            <td><%= member.last_name + member.first_name %></td>
+            <td><%= member.company.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+            <%#= link_to "受理",admins_company_path(member.company.id),method: :patch,params: { status: Company.statuses[:acceptance] } %><!--link_toでupdateアクションに決まった値を送る[link_to,button_toでcreate, updateを行う]参照。{}内はenum特有の書き方を用いている--->
+            <%#= link_to "不受理",admins_company_path(member.company.id),method: :patch,params: { status: Company.statuses[:rejected] } %><!--link_toではpatchは送れない--->
+            <td>
+              <div class = "company-btns d-flex">
+              <div class = "acceptance-btn">
+                <%= form_with model:@company,url: admins_company_path(member.id),method: :patch,local: true do |f| %>
+                  <%= f.hidden_field :id, :value => member.company.id %><!--indexから送るので誰の何のデータを送るかを明確にしてあげる-->
+                  <%= f.hidden_field :member_id, :value => member.id %>
+                  <%#= f.hidden_field :status, :value => acceptance %><!--左のいつものhidden_fieldの書き方ではenumの値を持たせられない-->
+                  <%= f.hidden_field :status, {value: "acceptance"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
+                  <%= f.submit "受理" %>
+                <% end %>
+              </div>
+              <div class = "rejected-btn ml-4">
+                <%= form_with model:@company,url: admins_company_path(member.id),method: :patch,local: true do |f| %>
+                  <%= f.hidden_field :id, :value => member.company.id %><!--indexから送るので誰の何のデータを送るかを明確にしてあげる-->
+                  <%= f.hidden_field :member_id, :value => member.id %>
+                  <%#= f.hidden_field :status, :value => rejected %><!--左のいつものhidden_fieldの書き方ではenumの値を持たせられない-->
+                  <%= f.hidden_field :status, {value: "rejected"} %><!--「hidden_fieldにenumの値を持たせる」参照-->
+                  <%= f.submit "不受理" %>
+                <% end %>
+              </div>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -26,13 +26,15 @@
         1.新規アイディア投稿<br>
         2.企業申請<br>
       </p>
-      <div class = "row">
-        <div class = "company-btn mx-auto mb-2">
-          <%= form_with model:@company,local: true do |f| %><!--コントローラに方で申請中に変えてもらう。また、ログインメンバーのみで来る作業なのでこちらでidの指定はいらない-->
-            <%= f.submit "上記の内容を受け入れ、申請を行う" %>
-          <% end %>
+      <% unless @member.company.present? %><!--多重申請ができないように非表示-->
+        <div class = "row">
+          <div class = "company-btn mx-auto mb-2">
+            <%= form_with model:@company,local: true do |f| %><!--コントローラに方で申請中に変えてもらう。また、ログインメンバーのみで来る作業なのでこちらでidの指定はいらない-->
+              <%= f.submit "上記の内容を受け入れ、申請を行う" %>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

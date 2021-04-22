@@ -1,8 +1,7 @@
-<div class = "container">
+<div class = "container" style = "min-height:550px;">
   <div class = "row">
     <h1>すべてのメンバー一覧</h1>
     <table class = "table">
-      <% @members.each do |member| %>
         <thead>
           <tr>
             <th>名前</th>
@@ -12,6 +11,7 @@
             <th>登録日</th>
           </tr>
         </thead>
+        <% @members.each do |member| %>
         <tbody>
           <tr>
             <td>
@@ -19,8 +19,10 @@
                 <%= member.last_name + member.first_name %>
               <% end %>
             </td>
-            <td><%= member.ideas.count %></td>
-            <td><%#= member.idea.is_adopted == true .count %></td>
+            <td><%= member.ideas.count %>件</td>
+            <td>
+              <%= member.ideas.where(adopted_status: "採用済み(完了済み)").count %>件
+            </td>
             <td>
               <% if member.is_company == true %>
                 <h6>企業メンバー</h6>
@@ -33,5 +35,10 @@
         </tbody>
       <% end %>
     </table>
+  </div>
+  <div class = "row">
+    <div class = "mb-2 mx-auto">
+      <%= paginate @members %>
+    </div>
   </div>
 </div>

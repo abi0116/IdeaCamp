@@ -5,6 +5,7 @@ class Members::IdeasController < ApplicationController
   def top
     @ideas = Idea.all
     @tags = @ideas.tag_counts_on(:tags) #投稿に紐づくタグの取得
+    @genres = Genre.all
   end
 
   def about
@@ -61,8 +62,9 @@ class Members::IdeasController < ApplicationController
     @idea.member_id = current_member.id
     #byebug
     if @idea.save
-      redirect_to idea_path(@idea.id)
+      redirect_to idea_path(@idea.id),notice: "アイディアの投稿ができました！"
     else
+      flash.now[:alert] = "必須項目の入力をお願いします"
       render :new
     end
   end

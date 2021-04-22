@@ -1,44 +1,52 @@
 <div class = "container">
   <div class = "row">
     <h1>すべての投稿一覧</h1>
-    <table class = "table">
-      <thead>
-        <tr>
-          <th>投稿者</th>
-          <th>Idea名</th>
-          <th>内容</th>
-          <th>ジャンル</th>
-          <th>タグ</th>
-          <th>採用ステータス</th>
-          <th>投稿日</th>
-        </tr>
-      </thead>
-      <% @ideas.each do |idea| %>
-        <tbody>
+     <table class = "table index_table">
+        <thead>
           <tr>
-            <td>
-              <%= link_to admins_member_path(idea.member.id) do %>
-                <%= idea.member.last_name + idea.member.first_name %>
-              <% end %>
-            </td>
-            <td><%= idea.title %></td>
-            <td><%= idea.caption %></td>
-            <td><%= idea.genre.name %></td>
-            <td>
-              <% idea.tag_list.each do |tag| %>
-                <%= link_to tag,ideas_path(tag_name: tag),data: {"turbolinks" => false} %>
-              <% end %></td>
-            <td>
-              <% if idea.is_adopted == true %>
-                  <P>採用</P>
-                <% else %>
-                  <P>未採用</P>
-                <% end %>
-            </td>
-            <td><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+            <th style="width: 10%">投稿者</th>
+            <th style="width: 10%">Idea名</th>
+            <th style="width: 30%">内容</th>
+            <th style="width: 10%">ジャンル</th>
+            <th style="width: 15%">タグ</th>
+            <th style="width: 15%">採用ステータス</th>
+            <th style="width: 10%">投稿日</th>
           </tr>
-        </tbody>
-      <% end %>
-    </table>
+        </thead>
+        <% @ideas.each do |idea| %>
+          <tbody>
+            <tr>
+              <td><%= idea.member.last_name + idea.member.first_name %></td>
+              <td><strong><%= link_to idea.title.truncate(55, omission: '...(以下略'),idea_path(idea.id) %></strong></td>
+              <td><%= idea.caption.truncate(55, omission: '...(以下略') %></td>
+              <td>
+                <%= idea.genre.name %>
+              </td>
+              <td>
+                <% idea.tag_list.each do |tag| %>
+                  <%= link_to tag.truncate(10),ideas_path(tag_name: tag) %>
+                <% end %>
+              </td>
+              <td>
+                <% if idea.adopted_status == "採用済み(完了済み)" %>
+                    <P>
+                      採用済み(完了済み)<br>
+                      採用者id:<%= idea.adopted_by_id %>
+                    </P>
+                  <% else %>
+                    <P><%= idea.adopted_status %></P>
+                  <% end %>
+              </td>
+              <td><%= idea.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "mb-2 mx-auto">
+      <%= paginate @ideas %>
+    </div>
   </div>
 </div>

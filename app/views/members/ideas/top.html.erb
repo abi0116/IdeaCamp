@@ -12,14 +12,11 @@
           </p>
         </div>
       </div>
-      <!--<div class="main-top-logo">-->
-        <div class="top-image">
-          <div class="top-photo-1"><%= image_tag(src= "4237050_s.jpg", size: "600x400") %></div>
-          <div class="top-photo-2"><%= image_tag(src= "top_cycling.jpg", size: "600x400") %></div>
-          <div class="top-photo-3"><%= image_tag(src= "top_skiing.jpg", size: "600x400") %></div>
-        </div>
-        <%#= image_tag(src= "4237050_s.jpg", size: "600x400") %>
-      <!--</div>-->
+      <div class="top-image">
+        <div class="top-photo-1"><%= image_tag(src= "4237050_s.jpg", size: "600x400") %></div>
+        <div class="top-photo-2"><%= image_tag(src= "top_cycling.jpg", size: "600x400") %></div>
+        <div class="top-photo-3"><%= image_tag(src= "top_skiing.jpg", size: "600x400") %></div>
+      </div>
     </div>
   </div>
   <div class = "row">
@@ -35,56 +32,23 @@
 <div class = "genre">
   <h5>ジャンル</h5>
   <h1>GENRE</h1>
-  <div class = "genre-icon">
-    <%= link_to genre_path(genre_id: 3) do %><!-- クエリパラメータ、値の受け取りはideaコントローラのgenre_indexで行っている -->
-    <div class = "camp">
-      <%= image_tag(src= "camp.jpg", size: "350x200") %>
-      <h5>キャンプ</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 4) do %>
-    <div class = "tozann">
-      <%= image_tag(src= "tozann.jpg", size: "350x200") %>
-      <h5>登山</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 5) do %>
-    <div class = "climbing">
-      <%= image_tag(src= "climbing.jpg", size: "350x200") %>
-      <h5>クライミング</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 6) do %>
-    <div class = "skiing">
-      <%= image_tag(src= "skiing.jpg", size: "350x200") %>
-      <h5>スキー</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 7) do %>
-    <div class = "kanu-">
-      <%= image_tag(src= "kanu-.jpg", size: "350x200") %>
-      <h5>カヌー</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 8) do %>
-    <div class = "fishing">
-      <%= image_tag(src= "fishing.jpg", size: "350x200") %>
-      <h5>釣り</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 9) do %>
-    <div class = "diving">
-      <%= image_tag(src= "diving.jpg", size: "350x200") %>
-      <h5>ダイビング</h5>
-    </div>
-    <% end %>
-    <%= link_to genre_path(genre_id: 10) do %>
-    <div class = "cycling">
-      <%= image_tag(src= "cycling.jpg", size: "350x200") %>
-      <h5>サイクリング</h5>
-    </div>
+  <div class = "genre-icon-list">
+    <% @genres.each do |genre| %>
+      <div class = "genle-icon">
+        <%= link_to genre_path(genre_id: genre.id) do %>
+          <%= attachment_image_tag genre,:genre_image,:fill,350,200,format: "jpg",follback: image_url("no_image.jpg") %><br>
+          <%= genre.name %>
+        <% end %>
+      </div>
     <% end %>
   </div>
+  <!--<div class = "genre-icon"><!--これだとハードコーディングでidが決まってしまっているので、each文で回してあげるのが正解。決まったジャンルしか出さないのであれば、idではなく名前をを渡してあげて、名前検索の形をとるのが良い-->
+  <!--  <%#= link_to genre_path(genre_id: 3) do %><!-- クエリパラメータ、値の受け取りはideaコントローラのgenre_indexで行っている -->
+  <!--  <div class = "camp">-->
+  <!--    <%#= image_tag(src= "camp.jpg", size: "350x200") %>-->
+  <!--    <h5>キャンプ</h5>-->
+  <!--  </div>-->
+  <!--  <%# end %>-->
 </div>
 <div class = "tag-list-box">
   <div class = "tag-list">
