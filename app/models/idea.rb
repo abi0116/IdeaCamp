@@ -11,7 +11,7 @@ class Idea < ApplicationRecord
 
   validates :title, presence: true
   validates :caption, presence: true
-  validates :genre_id, presence: true
+  #validates :genre_id, presence: true　belongs_toで必須になっているのでいらないバリテーション(重複してしまう)
   validates :image, presence: true
 
   enum adopted_status: {
