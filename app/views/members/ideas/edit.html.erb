@@ -8,8 +8,8 @@
 
         <%= f.collection_select :genre_id,Genre.all,:id,:name,include_blank: "選択してください" %><br>
 
-        <%= f.label :tag_list,"タグリスト(必須)" %><br>
-        <%= f.text_field :tag_list, value: @idea.tag_list.join(','),placeholder: "例) テント,一人用" %><br>
+        <%= f.label :tag_list,"タグリスト(Enterで複数登録可)",class: "mt-3" %><br>
+        <%= f.text_field :tag_list, value: @idea.tag_list.join(","),class: "tag_form tagit-hidden-field" ,name: "idea[tag_list]", id: "idea_tag_list",size: 40 %><br>
 
         <%= f.label :image,"添付したい写真、画像(任意)" %><br>
         <%= f.attachment_field :image %><br>
