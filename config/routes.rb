@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     resources :members do
       get "adopt_idea" => "members#adopt_idea"
     end
+
+    get   'inquiry'         => 'inquiries#index'     # 問い合わせ入力画面
+    post  'inquiry/confirm' => 'inquiries#confirm'   # 問い合わせ確認画面
+    post  'inquiry/thanks'  => 'inquiries#thanks'    # 問い合わせ送信完了画面
+
     resources :ideas do
       get 'get_tag_search', on: :collection, defaults: { format: 'json' }
       get 'get_tag_search', on: :member, defaults: { format: 'json' }
