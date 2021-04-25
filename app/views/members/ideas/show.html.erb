@@ -1,4 +1,4 @@
-<div class = "container">
+<div class = "container" style = "min-height:550px;">
   <div class = "row">
     <div class = "col-md-9 mx-auto mt-3">
       <h1>アイディア詳細</h1>
@@ -32,14 +32,14 @@
             <!--  </p>-->
             <%# end %>
             <% if @idea.member == current_member %>
-              <%= link_to "編集",edit_idea_path(@idea.id) %>
-              <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"} %>
+              <%= link_to "編集",edit_idea_path(@idea.id),class: "btn btn-info" %>
+              <%= link_to "削除",idea_path(@idea.id),method: :delete,data: {confirm: "削除しますか？"},class: "btn btn-danger" %>
             <% end %>
 
           </td>
           <td style="width: 30%">
             <strong>写真、画像</strong><br>
-            <%= attachment_image_tag @idea,:image,:fill,370,320,format: "jpg",follback: image_url("no_image.jpg") %>
+            <%= attachment_image_tag @idea,:image,:limit,370,320,format: "jpg",follback: image_url("no_image.jpg") %>
           </td>
           <td style="width: 45%">
             <strong>説明</strong><br>
@@ -79,7 +79,7 @@
               </div>
               <%= form_with model: @idea, method: :patch, url: idea_status_update_path(@idea.id), local: true do |f| %>
                 <%= f.select :adopted_status, Idea.adopted_statuses.keys.to_a, {} %><!--複数選択などがなければ今回のシンプルなシンプルな形でok-->
-                <%= f.submit "更新", class:"btn btn-create" %>
+                <%= f.submit "更新", class: "btn btn-info" %>
               <% end %>
             </div>
           <% else %>

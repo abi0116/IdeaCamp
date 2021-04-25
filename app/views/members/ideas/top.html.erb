@@ -1,4 +1,4 @@
-<div class = "container mb-3">
+<div class = "container mb-3" style = "min-height:600px;">
   <div class = "row">
     <div class = "main-top d-flex mt-4 mx-auto">
       <div class = "main-top-logo mr-5 mt-4" >
@@ -11,6 +11,17 @@
             そんな思いを形にする場所
           </p>
         </div>
+        <% if member_signed_in? %>
+          <% if current_member.is_company == false %>
+            <%= link_to new_idea_path,data: {"turbolinks" => false} do %>
+              <%= image_tag(src= "newbtn.png", size: "260x70") %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= link_to new_member_session_path do %>
+            <%= image_tag(src= "newmemberbtn.png", size: "260x70") %>
+          <% end %>
+        <% end %>
       </div>
       <div class="top-image">
         <div class="top-photo-1"><%= image_tag(src= "4237050_s.jpg", size: "600x400") %></div>
@@ -20,7 +31,7 @@
     </div>
   </div>
   <div class = "row">
-    <div class = "main-content mt-4 mx-auto text-center">
+    <div class = "main-content mt-5 mb-5 mx-auto text-center">
       <div class = "concept">
         <h5>コンセプト</h5>
         <h1>CONCEPT</h1>

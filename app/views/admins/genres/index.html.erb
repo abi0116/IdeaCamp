@@ -27,7 +27,7 @@
       <% @genres.each do |genre| %>
         <tr>
           <td><%= genre.name %></td>
-          <td><%= link_to "編集する", edit_admins_genre_path(genre.id), class:"btn btn-create",data: {confirm: "現在このジャンルに紐づいている投稿のジャンルが、編集後のものに自動的に置き換わりますがよろしいですか？"} %></td>
+          <td><%= link_to "編集する", edit_admins_genre_path(genre.id), class:"btn btn-create",data: {confirm: "現在このジャンルに紐づいている投稿のジャンルが、編集後のものに自動的に置き換わりますがよろしいですか？"},class: "btn btn-info" %></td>
         </tr>
       <% end %>
     </table>

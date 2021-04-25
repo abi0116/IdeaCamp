@@ -1,34 +1,40 @@
 <h4>コメント</h4>
 <div class = "row mb-4">
-  <div class = "new-comments col-md-5" >
+  <div class = "new-comments col-md-5">
     <p>コメント件数:<%= idea.idea_comments.count %></p>
     <% if current_member.present? %>
       <%= form_with(model:[idea,@idea_comment]) do |f| %>
-        <%= f.text_area :comment,row:"15",placeholder: "コメント記入欄" %>
-        <%= f.submit "送信する" %>
+        <%= f.text_area :comment,placeholder: "コメント記入欄",size: "40x5" %>
+        <div class = "comment-btn" style = "display:block;">
+          <%= f.submit "送信する" %>
+        </div>
       <% end %>
     <% end %>
   </div>
   <div class = "comment-log col-md-7 mb-4">
-    <table class = "table" >
-      <% idea.idea_comments.each do |idea_comment| %>
-        <tr>
-          <td>
-          <%= idea_comment.member.last_name + idea_comment.member.first_name %><br>
-          メンバーid:<%= idea_comment.member.id %>
-          </td>
-          <td>
-          <%= idea_comment.comment %><br>
-          <%= idea_comment.created_at.strftime("%Y/%m/%d %H:%M") %>
-          </td>
-          <td>
-            <% if idea_comment.member == current_member %>
-              <div class = "comment-delete" >
-                <%= link_to "削除",idea_idea_comment_path(idea_comment.idea,idea_comment),method: :delete,data: {confirm: "削除しますか？"},remote: true %>
-              </div>
-            <% end %>
-          </td>
-        </tr>
+    <% if idea.idea_comments.count == 0 %>
+      <h5>このアイディアに対するコメントはありません</h5>
+    <% else %>
+      <table class = "table" >
+        <% idea.idea_comments.each do |idea_comment| %>
+          <tr>
+            <td>
+            <%= idea_comment.member.last_name + idea_comment.member.first_name %><br>
+            メンバーid:<%= idea_comment.member.id %>
+            </td>
+            <td>
+            <%= idea_comment.comment %><br>
+            <%= idea_comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+            </td>
+            <td>
+              <% if idea_comment.member == current_member %>
+                <div class = "comment-delete" >
+                  <%= link_to "削除",idea_idea_comment_path(idea_comment.idea,idea_comment),method: :delete,data: {confirm: "削除しますか？"},remote: true %>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
   </div>

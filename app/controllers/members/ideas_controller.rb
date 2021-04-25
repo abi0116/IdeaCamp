@@ -61,11 +61,15 @@ class Members::IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     @idea.member_id = current_member.id
     #byebug
-    if @idea.save
-      redirect_to idea_path(@idea.id),notice: "アイディアの投稿ができました！"
+    unless current_member.is_company == true
+      if @idea.save
+        redirect_to idea_path(@idea.id),notice: "アイディアの投稿ができました！"
+      else
+        flash.now[:alert] = "必須項目の入力をお願いします"
+        render :new
+      end
     else
-      flash.now[:alert] = "必須項目の入力をお願いします"
-      render :new
+      redirect_to root_path
     end
   end
 
@@ -116,7 +120,7 @@ class Members::IdeasController < ApplicationController
       "このアイディアの開発完了報告ありがとうございます。お疲れさまでした"
     when -9 then
       "この停止中のアイディアを再開しました"
-    when -99 then
+    when -99,-90 then
       "このアイディアへのステータスが変更されました。今一度操作が正しいか確認をお願いいたします。"
     end
     redirect_to idea_path(@idea.id),notice: message
