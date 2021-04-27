@@ -44,34 +44,6 @@ https://docs.google.com/spreadsheets/d/1CUc5gSQX8-1X75aYklXAkg3JXhHQ3zlVV2ByJxGR
 
 ## 使用素材
 
-- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名と URL を明記してください。
-- 使用しない場合は、使用素材の項目を README から削除してください。
-  未定
+- photo AC https://www.photo-ac.com/main/search?%2Fmain%2Fsearch%2F=&q=%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88&srt=dlrank&qt=&pp=70&p=1&pt=C
+- やじるし素材天国　http://yajidesign.com/
 
-
-
-
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
