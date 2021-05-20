@@ -225,12 +225,14 @@ body {
 
 .about_top_logo {
   background-image: image-url("about_top.png");
+  background-position: center;
   background-size: cover;
   height: 250px;
 }
 
 .about_company_logo {
   background-image: image-url("about_company.png");
+  background-position: center;
   background-size: cover;
   height: 250px;
 }
